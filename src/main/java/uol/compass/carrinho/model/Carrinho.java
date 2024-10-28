@@ -1,23 +1,16 @@
 package uol.compass.carrinho.model;
 
-
-import uol.compass.carrinho.enums.Categoria;
+import java.util.List;
 
 public class Carrinho {
 
     private Integer id;
-    private String nome;
-    private Categoria categoria;
-    private Double valor;
-    private int quantidade;
+    List<ItensCarrinho> itens;
     private Double valor_total;
 
-    public Carrinho(Integer id, String nome, Categoria categoria, Double valor, int quantidade, Double valor_total) {
+    public Carrinho(Integer id, List<ItensCarrinho> itens, Double valor_total) {
         this.id = id;
-        this.nome = nome;
-        this.categoria = categoria;
-        this.valor = valor;
-        this.quantidade = quantidade;
+        this.itens = itens;
         this.valor_total = valor_total;
     }
 
@@ -29,36 +22,12 @@ public class Carrinho {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public List<ItensCarrinho> getItens() {
+        return itens;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setItens(List<ItensCarrinho> itens) {
+        this.itens = itens;
     }
 
     public Double getValor_total() {
@@ -73,10 +42,7 @@ public class Carrinho {
     public String toString() {
         return "Carrinho{" +
                 "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", categoria=" + categoria +
-                ", valor=" + valor +
-                ", quantidade=" + quantidade +
+                ", itens=" + itens +
                 ", valor_total=" + valor_total +
                 '}';
     }
