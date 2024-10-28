@@ -3,6 +3,7 @@ package uol.compass.carrinho;
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.model.Carrinho;
 import uol.compass.carrinho.model.Estoque;
+import uol.compass.carrinho.model.ItensCarrinho;
 
 
 public class Main {
@@ -10,9 +11,12 @@ public class Main {
 
         Estoque estoque = new Estoque(1, "Tenis",Categoria.CALCADO, 299.0,3);
 
+        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 2);
+
         Carrinho carrinho = new Carrinho(1, "Tenis", Categoria.CALCADO, 299.0, 1, 299.0);
 
         System.out.println(estoque);
+        System.out.println(itensCarrinho);
         System.out.println(carrinho);
     }
 }
