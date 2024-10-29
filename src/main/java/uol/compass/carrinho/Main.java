@@ -57,7 +57,7 @@ public class Main {
         System.out.println("Produto deletado");
         */
 
-        // TESTANDO LÓGICA DE ADICIONAR ITENS AO CARRINHO
+        /* TESTANDO LÓGICA DE ADICIONAR ITENS AO CARRINHO
         Carrinho carrinho = new Carrinho(null);
         carrinhoDao.inserir(carrinho);
         Estoque estoque = estoqueDao.encontrarPorId(2);
@@ -70,12 +70,18 @@ public class Main {
         carrinho.adicionarItem(itensCarrinho);
         carrinhoDao.atualizar(carrinho);
         System.out.println(carrinho);
-
+        */
 
         /* TESTE ENCONTRAR POR ID CARRINHO NO BANCO DE DADOS
         Carrinho carrinho = carrinhoDao.encontrarPorId(3);
         System.out.println(carrinho);
         */
+
+        List<Carrinho> listaCarrinho = new ArrayList<>();
+        listaCarrinho = carrinhoDao.encontrarTodos();
+        for (Carrinho obj: listaCarrinho) {
+            System.out.println(obj);
+        }
 
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
