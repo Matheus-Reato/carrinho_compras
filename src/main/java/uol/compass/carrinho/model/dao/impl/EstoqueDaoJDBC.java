@@ -7,6 +7,7 @@ import uol.compass.carrinho.model.Estoque;
 import uol.compass.carrinho.model.dao.EstoqueDao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstoqueDaoJDBC implements EstoqueDao {
@@ -92,6 +93,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
                     "SELECT * FROM estoque WHERE id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
+
             if (rs.next()) {
                 Estoque obj = new Estoque();
                 obj.setId(rs.getInt("id"));
@@ -114,6 +116,33 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
     @Override
     public List<Estoque> encontrarTodos() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM estoque ORDER BY categoria");
+            rs = st.executeQuery();
+
+            List<Estoque> list = new ArrayList<>();
+
+            while (rs.next()) {
+                Estoque obj = new Estoque();
+
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("nome"));
+                obj.setCategoria(Categoria.valueOf(rs.getString("categoria")));
+                obj.setValor(rs.getDouble("valor"));
+                obj.setQuantidade(rs.getInt("quantidade"));
+                list.add(obj);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 }

@@ -42,7 +42,13 @@ public class Main {
         System.out.println("Produto atualizado!");
         */
 
-
+        /* TESTE PROCURANDO TODOS NO BANCO DE DADOS
+        List<Estoque> listaEstoque= new ArrayList<>();
+        listaEstoque = estoqueDao.encontrarTodos();
+        for(Estoque obj : listaEstoque){
+            System.out.println(obj);
+        }
+        */
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
