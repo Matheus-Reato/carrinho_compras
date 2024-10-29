@@ -19,12 +19,13 @@ public class Main {
 
         List<ItensCarrinho> list = new ArrayList<>();
 
-        //Estoque estoque = new Estoque(null, "Tenis",Categoria.CALCADO, 299.0,3);
-        //Estoque estoque = new Estoque(null, "Calca Jeans",Categoria.CALCA, 399.0,5);
+        /* TESTE INSERINDO ESTOQUE NO BANCO DE DADOS
+        Estoque estoque = new Estoque(null, "Tenis",Categoria.CALCADO, 299.0,3);
+        Estoque estoque = new Estoque(null, "Calca Jeans",Categoria.CALCA, 399.0,5);
         Estoque estoque = new Estoque(null, "Camiseta Lisa",Categoria.CAMISETA, 89.90,10);
-        //estoqueDao.inserir(estoque);
-        //System.out.println("Inserted! New id = " + estoque.getId());
-
+        estoqueDao.inserir(estoque);
+        System.out.println("Inserted! New id = " + estoque.getId());
+        */
 
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);

@@ -52,11 +52,29 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             DB.closeStatement(st);
         }
     }
-
-
     @Override
     public void atualizar(Estoque obj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE estoque "
+                            + "SET nome = ?, categoria = ?, valor = ?, quantidade = ? "
+                            + "WHERE Id = ?");
 
+            st.setString(1, obj.getNome());
+            st.setString(2, obj.getCategoria().name());
+            st.setDouble(3, obj.getValor());
+            st.setInt(4, obj.getQuantidade());
+            st.setInt(5, obj.getId());
+
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
