@@ -57,7 +57,24 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
     @Override
     public void atualizar(Carrinho obj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE carrinho "
+                            + "SET valor_total = ? "
+                            + "WHERE id = ?");
 
+            st.setDouble(1, obj.getValor_total());
+            st.setInt(2, obj.getId());
+
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
