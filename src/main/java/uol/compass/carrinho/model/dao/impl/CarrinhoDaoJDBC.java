@@ -8,6 +8,7 @@ import uol.compass.carrinho.model.Estoque;
 import uol.compass.carrinho.model.dao.CarrinhoDao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarrinhoDaoJDBC implements CarrinhoDao {
@@ -112,6 +113,30 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
     @Override
     public List<Carrinho> encontrarTodos() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM carrinho ORDER BY id");
+            rs = st.executeQuery();
+
+            List<Carrinho> list = new ArrayList<>();
+
+            while (rs.next()) {
+                Carrinho obj = new Carrinho();
+
+                obj.setId(rs.getInt("id"));
+                obj.setValor_total(rs.getDouble("valor_total"));
+                list.add(obj);
+            }
+            return list;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 }
