@@ -2,7 +2,9 @@ package uol.compass.carrinho.model.dao.impl;
 
 import uol.compass.carrinho.DB.DB;
 import uol.compass.carrinho.DB.DbException;
+import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.model.Carrinho;
+import uol.compass.carrinho.model.Estoque;
 import uol.compass.carrinho.model.dao.CarrinhoDao;
 
 import java.sql.*;
@@ -65,7 +67,30 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
     @Override
     public Carrinho encontrarPorId(Integer id) {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM carrinho WHERE id = ?"); //fazer um inner join com itens_carrinho pra pegar todos os itens com o mesmo id
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                Carrinho obj = new Carrinho();
+                obj.setId(rs.getInt("id"));
+                obj.setValor_total(rs.getDouble("valor_total"));
+
+                return obj;
+            }
+            return null;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override

@@ -67,6 +67,10 @@ public class Main {
         System.out.println(carrinho);
         */
 
+        /* TESTE ENCONTRAR POR ID CARRINHO NO BANCO DE DADOS
+        Carrinho carrinho = carrinhoDao.encontrarPorId(3);
+        System.out.println(carrinho);
+        */
 
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);

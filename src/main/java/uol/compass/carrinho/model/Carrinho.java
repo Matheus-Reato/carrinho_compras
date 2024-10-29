@@ -9,6 +9,9 @@ public class Carrinho {
     List<ItensCarrinho> itens = new ArrayList<>();
     private Double valor_total;
 
+    public Carrinho() {
+    }
+
     public Carrinho(Integer id) {
         this.id = id;
     }
