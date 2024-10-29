@@ -10,6 +10,8 @@ public class Estoque {
     private Double valor;
     private Integer quantidade;
 
+    public Estoque() {
+    }
 
     public Estoque(Integer id, String nome, Categoria categoria, Double valor, Integer quantidade) {
         this.id = id;

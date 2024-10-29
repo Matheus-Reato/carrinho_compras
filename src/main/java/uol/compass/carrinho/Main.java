@@ -24,8 +24,24 @@ public class Main {
         Estoque estoque = new Estoque(null, "Calca Jeans",Categoria.CALCA, 399.0,5);
         Estoque estoque = new Estoque(null, "Camiseta Lisa",Categoria.CAMISETA, 89.90,10);
         estoqueDao.inserir(estoque);
-        System.out.println("Inserted! New id = " + estoque.getId());
+        System.out.println("Inserido! Novo id = " + estoque.getId());
         */
+
+        /* TESTE PROCURANDO POR ID NO BANCO DE DADOS
+        Estoque estoque = estoqueDao.encontrarPorId(1);
+        System.out.println(estoque);
+        */
+
+        /* TESTE ATUALIZANDO PRODUTO NO BANCO DE DADOS
+        Estoque estoque = estoqueDao.encontrarPorId(1);
+        estoque.setNome("Camiseta Polo");
+        estoque.setCategoria(Categoria.CAMISETA);
+        estoque.setValor(499.0);
+        estoque.setQuantidade(1);
+        estoqueDao.atualizar(estoque);
+        System.out.println("Produto atualizado!");
+        */
+
 
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
