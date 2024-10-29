@@ -4,6 +4,7 @@ import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.model.Carrinho;
 import uol.compass.carrinho.model.Estoque;
 import uol.compass.carrinho.model.ItensCarrinho;
+import uol.compass.carrinho.model.dao.CarrinhoDao;
 import uol.compass.carrinho.model.dao.DaoFactory;
 import uol.compass.carrinho.model.dao.EstoqueDao;
 import uol.compass.carrinho.model.dao.impl.EstoqueDaoJDBC;
@@ -16,6 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
+        CarrinhoDao carrinhoDao = DaoFactory.createCarrinhoDao();
 
         List<ItensCarrinho> list = new ArrayList<>();
 
@@ -56,17 +58,16 @@ public class Main {
         */
 
         /* TESTANDO LÓGICA DE ADICIONAR ITENS AO CARRINHO
-        Carrinho carrinho = new Carrinho(1);
-        Estoque estoque = new Estoque(1, "Tenis",Categoria.CALCADO, 299.0,3);
+        Carrinho carrinho = new Carrinho(null);
+        carrinhoDao.inserir(carrinho);
+        Estoque estoque = estoqueDao.encontrarPorId(1);
         ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1, carrinho.getId());
         carrinho.adicionarItem(itensCarrinho);
-
-        estoque = new Estoque(2, "Calca",Categoria.CALCA, 399.0,5);
-        itensCarrinho = new ItensCarrinho(2, estoque, 2, carrinho.getId());
-        carrinho.adicionarItem(itensCarrinho);
-
+        //carrinho.atualizar(carrinho);
         System.out.println(carrinho);
         */
+
+
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
