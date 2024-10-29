@@ -9,6 +9,9 @@ public class ItensCarrinho{
     private Integer quantidade;
     private Integer carrinho_id;
 
+    public ItensCarrinho() {
+    }
+
     public ItensCarrinho(Integer id, Estoque produto, Integer quantidade, Integer carrinho_id) {
         this.id = id;
         this.produto = produto;

@@ -92,6 +92,7 @@ public class Main {
         System.out.println("Carrinho deletado");
         */
 
+        /* TESTE ADICIONANDO ITEM DO CARRINHO NO BANCO
         Carrinho carrinho = new Carrinho(null);
         carrinhoDao.inserir(carrinho);
 
@@ -108,7 +109,10 @@ public class Main {
         itensCarrinhoDao.inserir(itensCarrinho);
 
         System.out.println(itensCarrinho);
+        */
 
+        ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
+        System.out.println(itensCarrinho);
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
