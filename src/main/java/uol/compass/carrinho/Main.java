@@ -77,11 +77,17 @@ public class Main {
         System.out.println(carrinho);
         */
 
+        /* TESTE ENCONTRAR TODOS OS CARRINHO NO BANCO DE DADOS
         List<Carrinho> listaCarrinho = new ArrayList<>();
         listaCarrinho = carrinhoDao.encontrarTodos();
         for (Carrinho obj: listaCarrinho) {
             System.out.println(obj);
         }
+        */
+
+        
+        carrinhoDao.deletarPorId(5);
+        System.out.println("Carrinho deletado");
 
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
