@@ -50,6 +50,11 @@ public class Main {
         }
         */
 
+        /* TESTE DELETANDO POR ID NO BANCO DE DADOS
+        estoqueDao.deletarPorId(3);
+        System.out.println("Produto deletado");
+        */
+
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
 //        estoque = new Estoque(1, "Calca Jeans",Categoria.CALCA, 239.0,3);
