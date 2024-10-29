@@ -55,6 +55,19 @@ public class Main {
         System.out.println("Produto deletado");
         */
 
+        /* TESTANDO LÓGICA DE ADICIONAR ITENS AO CARRINHO
+        Carrinho carrinho = new Carrinho(1);
+        Estoque estoque = new Estoque(1, "Tenis",Categoria.CALCADO, 299.0,3);
+        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1, carrinho.getId());
+        carrinho.adicionarItem(itensCarrinho);
+
+        estoque = new Estoque(2, "Calca",Categoria.CALCA, 399.0,5);
+        itensCarrinho = new ItensCarrinho(2, estoque, 2, carrinho.getId());
+        carrinho.adicionarItem(itensCarrinho);
+
+        System.out.println(carrinho);
+        */
+
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
 //        estoque = new Estoque(1, "Calca Jeans",Categoria.CALCA, 239.0,3);

@@ -1,17 +1,16 @@
 package uol.compass.carrinho.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Carrinho {
 
     private Integer id;
-    List<ItensCarrinho> itens;
+    List<ItensCarrinho> itens = new ArrayList<>();
     private Double valor_total;
 
-    public Carrinho(Integer id, List<ItensCarrinho> itens, Double valor_total) {
+    public Carrinho(Integer id) {
         this.id = id;
-        this.itens = itens;
-        this.valor_total = valor_total;
     }
 
     public Integer getId() {
@@ -36,6 +35,17 @@ public class Carrinho {
 
     public void setValor_total(Double valor_total) {
         this.valor_total = valor_total;
+    }
+
+    public void adicionarItem(ItensCarrinho item) {
+        itens.add(item);
+        atualizarValorTotal();
+    }
+
+    private void atualizarValorTotal() {
+        this.valor_total = itens.stream()
+                .mapToDouble(ItensCarrinho::valorProduto)
+                .sum();
     }
 
     @Override
