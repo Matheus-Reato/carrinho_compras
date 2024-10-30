@@ -3,9 +3,9 @@ package uol.compass.carrinho.model.dao.impl;
 import uol.compass.carrinho.DB.DB;
 import uol.compass.carrinho.DB.DbException;
 import uol.compass.carrinho.enums.Categoria;
-import uol.compass.carrinho.model.Carrinho;
-import uol.compass.carrinho.model.Estoque;
-import uol.compass.carrinho.model.ItensCarrinho;
+import uol.compass.carrinho.model.entities.Carrinho;
+import uol.compass.carrinho.model.entities.Estoque;
+import uol.compass.carrinho.model.entities.ItensCarrinho;
 import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
 
 import java.sql.*;

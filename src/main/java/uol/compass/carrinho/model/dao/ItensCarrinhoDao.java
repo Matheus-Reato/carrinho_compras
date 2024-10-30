@@ -1,7 +1,7 @@
 package uol.compass.carrinho.model.dao;
 
-import uol.compass.carrinho.model.Carrinho;
-import uol.compass.carrinho.model.ItensCarrinho;
+import uol.compass.carrinho.model.entities.Carrinho;
+import uol.compass.carrinho.model.entities.ItensCarrinho;
 
 import java.util.List;
 
