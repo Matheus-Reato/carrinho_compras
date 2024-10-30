@@ -8,7 +8,10 @@ import uol.compass.carrinho.model.ItensCarrinho;
 import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
@@ -155,6 +158,48 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
     @Override
     public List<ItensCarrinho> encontrarTodos() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT itens_carrinho.id AS item_id, "
+                            + "itens_carrinho.quantidade AS item_quantidade, "
+                            + "itens_carrinho.produto_id AS produto_id, "
+                            + "itens_carrinho.carrinho_id AS carrinho_id, "
+                            + "estoque.nome AS produto_nome, "
+                            + "estoque.categoria AS produto_categoria, "
+                            + "estoque.valor AS produto_valor, "
+                            + "estoque.quantidade AS produto_quantidade "
+                            + "FROM itens_carrinho "
+                            + "JOIN estoque ON itens_carrinho.produto_id = estoque.id "
+                            + "ORDER BY item_id"
+                            );
+
+            rs = st.executeQuery();
+
+            List<ItensCarrinho> itens = new ArrayList<>();
+            Map<Integer, Estoque> mapa = new HashMap<>();
+
+            while (rs.next()) {
+
+                Estoque estoque = mapa.get(rs.getInt("produto_id"));
+
+                if (estoque == null) {
+                    estoque = instanciarEstoque(rs);
+                    mapa.put(rs.getInt("produto_id"), estoque);
+                }
+
+                ItensCarrinho obj = instanciarItensCarrinho(rs, estoque);
+                itens.add(obj);
+            }
+            return itens;
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 }
