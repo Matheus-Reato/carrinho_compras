@@ -80,7 +80,20 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
     @Override
     public void deletarPorId(Integer id) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM itens_carrinho WHERE id = ?");
 
+            st.setInt(1, id);
+
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
