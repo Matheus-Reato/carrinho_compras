@@ -51,11 +51,16 @@ public class Carrinho {
                 .sum();
     }
 
+    public void atualizarValorBanco(List<ItensCarrinho> listaItens){
+
+        this.valor_total = listaItens.stream().mapToDouble(ItensCarrinho::valorProduto).sum();
+    }
+
+
     @Override
     public String toString() {
         return "Carrinho{" +
                 "id=" + id +
-                ", itens=" + itens +
                 ", valor_total=" + valor_total +
                 '}';
     }
