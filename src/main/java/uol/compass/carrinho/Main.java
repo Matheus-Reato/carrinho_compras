@@ -109,7 +109,7 @@ public class Main {
         itensCarrinhoDao.inserir(itensCarrinho);
 
         System.out.println(itensCarrinho);
-        */
+           */
 
         /* TESTE ENCONTRAR ITENS CARRINHO POR ID
         ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
@@ -117,16 +117,25 @@ public class Main {
         */
 
         /* TESTE PARA ATUALIZAR ITEM DO CARRINHO NO BANCO
-        Estoque estoque = estoqueDao.encontrarPorId(1);
-        ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
+        Estoque estoque = estoqueDao.encontrarPorId(2);
+        ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(1);
         itensCarrinho.setCarrinho_id(7);
         itensCarrinho.setProduto(estoque);
         itensCarrinho.setQuantidade(3);
         itensCarrinhoDao.atualizar(itensCarrinho);
         */
 
+        /* TESTE DELETAR ITEM DO CARRINHO NO BANCO
         itensCarrinhoDao.deletarPorId(3);
         System.out.println("Item deletado");
+        */
+
+
+        List<ItensCarrinho> lista = itensCarrinhoDao.encontrarTodos();
+        for (ItensCarrinho item: lista) {
+            System.out.println(item);
+        }
+
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
