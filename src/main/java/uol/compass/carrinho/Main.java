@@ -116,13 +116,17 @@ public class Main {
         System.out.println(itensCarrinho);
         */
 
+        /* TESTE PARA ATUALIZAR ITEM DO CARRINHO NO BANCO
         Estoque estoque = estoqueDao.encontrarPorId(1);
         ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
         itensCarrinho.setCarrinho_id(7);
         itensCarrinho.setProduto(estoque);
         itensCarrinho.setQuantidade(3);
         itensCarrinhoDao.atualizar(itensCarrinho);
+        */
 
+        itensCarrinhoDao.deletarPorId(3);
+        System.out.println("Item deletado");
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
