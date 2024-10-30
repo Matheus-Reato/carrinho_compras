@@ -3,6 +3,7 @@ package uol.compass.carrinho.model.dao.impl;
 import uol.compass.carrinho.DB.DB;
 import uol.compass.carrinho.DB.DbException;
 import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.model.Carrinho;
 import uol.compass.carrinho.model.Estoque;
 import uol.compass.carrinho.model.ItensCarrinho;
 import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
@@ -146,6 +148,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
         return estoque;
     }
 
+
     private ItensCarrinho instanciarItensCarrinho(ResultSet rs, Estoque estoque) throws SQLException {
         ItensCarrinho obj = new ItensCarrinho();
         obj.setId(rs.getInt("item_id"));
@@ -173,7 +176,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
                             + "FROM itens_carrinho "
                             + "JOIN estoque ON itens_carrinho.produto_id = estoque.id "
                             + "ORDER BY item_id"
-                            );
+            );
 
             rs = st.executeQuery();
 
@@ -201,5 +204,12 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
         }
+    }
+
+    @Override
+    public List<ItensCarrinho> encontrarPorCarrinho(Carrinho carrinho) {
+            List<ItensCarrinho> todosItens = encontrarTodos();
+
+            return todosItens.stream().filter(item -> item.getCarrinho_id() == carrinho.getId()).collect(Collectors.toList());
     }
 }

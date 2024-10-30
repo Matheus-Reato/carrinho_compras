@@ -1,5 +1,6 @@
 package uol.compass.carrinho.model.dao;
 
+import uol.compass.carrinho.model.Carrinho;
 import uol.compass.carrinho.model.ItensCarrinho;
 
 import java.util.List;
@@ -11,5 +12,7 @@ public interface ItensCarrinhoDao {
     void deletarPorId(Integer id);
     ItensCarrinho encontrarPorId(Integer id);
     List<ItensCarrinho> encontrarTodos();
+
+    List<ItensCarrinho> encontrarPorCarrinho(Carrinho carrinho);
 
 }
