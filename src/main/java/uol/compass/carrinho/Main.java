@@ -106,6 +106,7 @@ public class Main {
                 }
 
                 if (entradaEstoque == 3) {
+                    //mostrar uma lista com os produtos disponíveis para saber o id de qual remover
                     System.out.print("Qual o id do produto que deseja remover? ");
                     int id = sc.nextInt();
 
@@ -136,15 +137,17 @@ public class Main {
 
             if(entradaGerenciador == 2){
                 Carrinho carrinho = new Carrinho(null);
-                carrinhoDao.inserir(carrinho);
+                //carrinhoDao.inserir(carrinho);
 
                 while(entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
                     System.out.println("2 - Atualizar item do carrinho");
                     System.out.println("3 - Remover item do carrinho");
-                    System.out.println("4 - Procurar item do carrinho por id");
-                    System.out.println("5 - Procurar todos os itens do carrinho");
-                    System.out.println("6 - Procurar carrinho");
+                    System.out.println("4 - Remover carrinho");
+                    System.out.println("5 - Procurar item do carrinho por id");
+                    System.out.println("6 - Procurar todos os itens do carrinho");
+                    System.out.println("7 - Procurar carrinho");
+                    System.out.println("8 - Procurar todos os carrinhos");
                     System.out.println("0 - Sair");
 
                     entradaCarrinho = sc.nextInt();
@@ -169,7 +172,7 @@ public class Main {
                         itensCarrinhoDao.inserir(itensCarrinho);
                     }
 
-                    if(entradaCarrinho == 2){
+                    if(entradaCarrinho == 2) {
                         List<ItensCarrinho> listaItens = new ArrayList<>();
                         System.out.print("Deseja atualizar produtos do carrinho atual?(s/n) ");
                         char escolha = sc.next().charAt(0);
@@ -233,7 +236,116 @@ public class Main {
                             List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
                             carrinho.atualizarValorBanco(listaValores);
                             carrinhoDao.atualizar(carrinho);
+
+                        System.out.println("Produto atualizado com sucesso!");
                     }
+
+                    if(entradaCarrinho == 3) {
+                        List<ItensCarrinho> listaItens = new ArrayList<>();
+                        System.out.print("Deseja remover um item do carrinho atual?(s/n) ");
+                        char escolha = sc.next().charAt(0);
+
+                        if(escolha == 's') {//verificar se existe produtos nesse carrinho
+                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                        }
+                        if(escolha == 'n'){//verificar se existe produtos nesse carrinho
+                            List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
+                            for (Carrinho listaCarrinho : carrinhos) {
+                                System.out.println(listaCarrinho);
+                            }
+                            System.out.println("Qual o id do carrinho que deseja remover o item? ");
+                            int idCarrinho = sc.nextInt();
+
+                            carrinho = carrinhoDao.encontrarPorId(idCarrinho);
+                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                        }
+
+                        for (ItensCarrinho item : listaItens) {
+                            System.out.println(item);
+                        }
+
+                        System.out.print("ID do item que deseja remover: ");
+                        int id = sc.nextInt();
+
+                        itensCarrinhoDao.deletarPorId(id);
+                        List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                        carrinho.atualizarValorBanco(listaValores);
+                        carrinhoDao.atualizar(carrinho);
+
+                        System.out.println("Produto removido com sucesso!");
+                    }
+
+                    if(entradaCarrinho == 4) {
+                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                        for (Carrinho carrinhos: listaCarrinhos) {
+                            System.out.println(carrinhos);
+                        }
+
+                        System.out.print("Qual o id do carrinho que deseja remover? ");
+                        int id = sc.nextInt();
+
+                        carrinhoDao.deletarPorId(id);
+                        System.out.println("Carrinho deletado com sucesso!");
+                    }
+
+                    if(entradaCarrinho == 5) {
+                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                        for (Carrinho carrinhos: listaCarrinhos) {
+                            System.out.println(carrinhos);
+                        }
+
+                        System.out.print("Qual o id do carrinho que você quer procurar o item? ");
+                        int id = sc.nextInt();
+
+                        carrinho = carrinhoDao.encontrarPorId(id);
+
+                        System.out.print("Qual o id do produto que você quer encontrar? ");
+                        int idItem = sc.nextInt();
+
+                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
+                        ItensCarrinho itemEspecifico = itens.stream().filter(item -> item.getId().equals(idItem)).findFirst().orElse(null);
+
+                        System.out.println(itemEspecifico); //fazer validações para caso nao encontrar produto pelo id
+
+                    }
+
+                    if(entradaCarrinho == 6) {
+                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                        for (Carrinho carrinhos: listaCarrinhos) {
+                            System.out.println(carrinhos);
+                        }
+
+                        System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
+                        int id = sc.nextInt();
+
+                        carrinho = carrinhoDao.encontrarPorId(id);
+
+                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
+                        for (ItensCarrinho item: itens) {
+                            System.out.println(item);
+                        }
+                    }
+
+                    if(entradaCarrinho == 7) {
+                        System.out.print("Qual o id do carrinho que você está procurando? ");
+                        int id = sc.nextInt();
+
+                        Carrinho carrinhoEspecifico = carrinhoDao.encontrarPorId(id);
+
+                        System.out.println(carrinhoEspecifico);
+                    }
+
+                    if(entradaCarrinho == 8) {
+                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+
+                        for (Carrinho carrinhos: listaCarrinhos) {
+                            System.out.println(carrinhos);
+                        }
+                    }
+
+                    //fazer lógica para sair do while
                 }
             }
 
