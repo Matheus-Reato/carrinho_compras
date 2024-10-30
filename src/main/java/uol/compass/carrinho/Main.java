@@ -111,8 +111,18 @@ public class Main {
         System.out.println(itensCarrinho);
         */
 
+        /* TESTE ENCONTRAR ITENS CARRINHO POR ID
         ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
         System.out.println(itensCarrinho);
+        */
+
+        Estoque estoque = estoqueDao.encontrarPorId(1);
+        ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(3);
+        itensCarrinho.setCarrinho_id(7);
+        itensCarrinho.setProduto(estoque);
+        itensCarrinho.setQuantidade(3);
+        itensCarrinhoDao.atualizar(itensCarrinho);
+
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);

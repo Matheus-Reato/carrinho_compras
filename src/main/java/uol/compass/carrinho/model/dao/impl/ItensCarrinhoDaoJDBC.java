@@ -56,7 +56,26 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
     @Override
     public void atualizar(ItensCarrinho obj) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement(
+                    "UPDATE itens_carrinho "
+                            + "SET carrinho_id = ?, produto_id = ?, quantidade = ? "
+                            + "WHERE Id = ?");
 
+            st.setInt(1, obj.getCarrinho_id());
+            st.setInt(2, obj.getProduto().getId());
+            st.setInt(3, obj.getQuantidade());
+            st.setInt(4, obj.getId());
+
+            st.executeUpdate();
+        }
+        catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
