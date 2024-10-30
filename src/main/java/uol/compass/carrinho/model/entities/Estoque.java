@@ -1,4 +1,4 @@
-package uol.compass.carrinho.model;
+package uol.compass.carrinho.model.entities;
 
 import uol.compass.carrinho.enums.Categoria;
 

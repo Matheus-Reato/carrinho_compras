@@ -1,6 +1,6 @@
-package uol.compass.carrinho.model;
+package uol.compass.carrinho.model.entities;
 
-import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.model.entities.Estoque;
 
 public class ItensCarrinho{
 
