@@ -130,12 +130,18 @@ public class Main {
         System.out.println("Item deletado");
         */
 
-
+        /* TESTE ENCONTRAR TODOS OS ITENS NO BANCO
         List<ItensCarrinho> lista = itensCarrinhoDao.encontrarTodos();
         for (ItensCarrinho item: lista) {
             System.out.println(item);
         }
+        */
 
+        Carrinho carrinho = carrinhoDao.encontrarPorId(7);
+        List<ItensCarrinho> lista = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+        for (ItensCarrinho item: lista) {
+            System.out.println(item);
+        }
 
 //        ItensCarrinho itensCarrinho = new ItensCarrinho(1, estoque, 1);
 //        list.add(itensCarrinho);
