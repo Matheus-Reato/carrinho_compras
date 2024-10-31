@@ -126,6 +126,12 @@ public class Estoque {
         }
     }
 
+    public void verficarDisponibilidade(Estoque estoque){
+        if (estoque.getStatus_produto() == Status.INDISPONIVEL ){
+            throw new IllegalArgumentException("Não é possível adicionar um item indisponível ao carrinho.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Estoque{" +
