@@ -212,8 +212,13 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
 
     @Override
     public List<ItensCarrinho> encontrarPorCarrinho(Carrinho carrinho) {
+        try {
             List<ItensCarrinho> todosItens = encontrarTodos();
 
             return todosItens.stream().filter(item -> item.getCarrinho_id() == carrinho.getId()).collect(Collectors.toList());
+        }catch (IllegalStateException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
     }
 }

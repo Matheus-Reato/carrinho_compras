@@ -113,7 +113,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
                 return obj;
             }
-            return null;
+            throw new IllegalArgumentException("Este ID não existe");
         }
         catch (SQLException e) {
             throw new DbException(e.getMessage());
