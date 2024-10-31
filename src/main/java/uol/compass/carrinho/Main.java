@@ -71,7 +71,7 @@ public class Main {
                             System.out.print("Status (DISPONIVEL/INDISPONIVEL): ");
                             sc.nextLine();
                             String status_produto = sc.nextLine().toUpperCase();
-                            //estoque.validarStatus(status_produto); FAZER VALIDACAO
+                            estoque.validarStatus(status_produto);
 
                             estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade, Status.valueOf(status_produto));
                             estoqueDao.inserir(estoque);
@@ -152,8 +152,8 @@ public class Main {
 
                             if (escolha == 's') {
                                 System.out.print("Novo status do produto: ");
-                                String status_produto = sc.next();
-                                //estoque.validarCategoria(categoria); FAZER VALIDACAO
+                                String status_produto = sc.next().toUpperCase();
+                                estoque.validarStatus(status_produto);
                                 estoque.setStatus_produto(Status.valueOf(status_produto));
                             }
 
@@ -167,44 +167,49 @@ public class Main {
                     }
 
                     if (entradaEstoque == 3) {
-                        System.out.println("1 - Remover o produto");
-                        System.out.println("2 - Tornar o produto indisponível");
-                        System.out.println("AVISO: remover o produto também irá excluí-lo de todos os carrinhos em que o item está inserido.");
+                        try {
+                            System.out.println("1 - Remover o produto");
+                            System.out.println("2 - Tornar o produto indisponível");
+                            System.out.println("AVISO: remover o produto também irá excluí-lo de todos os carrinhos em que o item está inserido.");
 
-                        int escolhaRemover = sc.nextInt();
+                            int escolhaRemover = sc.nextInt();
 
-                        List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-                        for(Estoque e : listaEstoque){
-                            System.out.println(e);
-                        }
-
-                        if(escolhaRemover == 1){
-                            System.out.print("Qual o id do produto que deseja remover? ");
-                            int id = sc.nextInt();
-
-                            estoqueDao.deletarPorId(id);
-
-                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-
-                            for (Carrinho c : listaCarrinhos) {
-                                List<ItensCarrinho> itensCarrinho = itensCarrinhoDao.encontrarPorCarrinho(c);
-                                c.atualizarValorBanco(itensCarrinho);
-                                carrinhoDao.atualizar(c);
+                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+                            for (Estoque e : listaEstoque) {
+                                System.out.println(e);
                             }
 
-                            System.out.println("Produto removido com sucesso!"); //quando o produto for removido, fazer algo para tirar do itens carrinho ou equivalente para não dar problema
+
+                            if (escolhaRemover == 1) {
+                                System.out.print("Qual o id do produto que deseja remover? ");
+                                int id = sc.nextInt();
+
+                                estoqueDao.deletarPorId(id);
+
+                                List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+
+                                //Se fosse pensar em uma base de dados grande, fica inviável atualizar todos os carrinhos de compra
+                                for (Carrinho c : listaCarrinhos) {
+                                    List<ItensCarrinho> itensCarrinho = itensCarrinhoDao.encontrarPorCarrinho(c);
+                                    c.atualizarValorBanco(itensCarrinho);
+                                    carrinhoDao.atualizar(c);
+                                }
+
+                                System.out.println("Produto removido com sucesso!");
+                            }
+
+                            if (escolhaRemover == 2) {
+                                System.out.print("Qual o id do produto que deseja tornar indisponível? ");
+                                int id = sc.nextInt();
+
+                                Estoque estoque = estoqueDao.encontrarPorId(id);
+                                estoque.setStatus_produto(Status.INDISPONIVEL);
+                                estoqueDao.atualizar(estoque);
+                            }
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao remover o produto: " + e.getMessage());
+                            System.out.println("Tente novamente");
                         }
-
-                        if(escolhaRemover == 2){
-                            System.out.print("Qual o id do produto que deseja tornar indisponível? ");
-                            int id = sc.nextInt();
-
-                            Estoque estoque = estoqueDao.encontrarPorId(id);
-                            estoque.setStatus_produto(Status.INDISPONIVEL);
-                            estoqueDao.atualizar(estoque);
-                        }
-
-
                     }
 
                     if (entradaEstoque == 4) {
