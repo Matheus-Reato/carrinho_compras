@@ -21,6 +21,7 @@ public class Main {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
+        int entradaEstoque = 1;
         int entradaCarrinho = 1;
 
         EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
@@ -34,105 +35,158 @@ public class Main {
         int entradaGerenciador = sc.nextInt(); // fazer loop até inserir uma entrada válida
 
             if (entradaGerenciador == 1) {
-                System.out.println("1 - Adicionar produto ao estoque");
-                System.out.println("2 - Atualizar produto do estoque");
-                System.out.println("3 - Remover produto do estoque");
-                System.out.println("4 - Procurar produto do estoque por id");
-                System.out.println("5 - Procurar todos os produtos do estoque");
-                System.out.println("0 - Sair");
 
-                int entradaEstoque = sc.nextInt(); //fazer loop até inserir uma entrada válida
-                sc.nextLine();
+                while(entradaEstoque != 0) {
+                    System.out.println("1 - Adicionar produto ao estoque");
+                    System.out.println("2 - Atualizar produto do estoque");
+                    System.out.println("3 - Remover produto do estoque");
+                    System.out.println("4 - Procurar produto do estoque por id");
+                    System.out.println("5 - Procurar todos os produtos do estoque");
+                    System.out.println("0 - Sair");
 
-                if (entradaEstoque == 1) {
-                    System.out.print("Nome do produto: ");
-                    String nome = sc.nextLine();
+                    entradaEstoque = sc.nextInt();
+                    sc.nextLine();
 
-                    System.out.print("Categoria (CAMISETA/CALCA/CALCADO): "); //fazer algo para ficar em loop até ser uma das categorias
-                    String categoria = sc.nextLine().toUpperCase();
+                    if (entradaEstoque == 1) {
+                        try {
+                            Estoque estoque = new Estoque();
 
-                    System.out.print("Valor: "); //valor não pode ser 0, ver onde fazer a verificação
-                    Double valor = sc.nextDouble();
+                            System.out.print("Nome do produto: ");
+                            String nome = sc.nextLine();
+                            estoque.validarNome(nome);
 
-                    System.out.print("Quantidade: "); // quantidade não pode ser 0, mesma coisa do valor
-                    int quantidade = sc.nextInt();
 
-                    Estoque estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade);
-                    estoqueDao.inserir(estoque);
-                    System.out.println("Produto inserido no estoque com sucesso!");
-                }
+                            System.out.print("Categoria (CAMISETA/CALCA/CALCADO): ");
+                            String categoria = sc.nextLine().toUpperCase();
+                            estoque.validarCategoria(categoria);
 
-                if (entradaEstoque == 2) {
-                    System.out.print("Qual o id do produto que deseja alterar? ");
-                    int id = sc.nextInt();
 
-                    Estoque estoque = estoqueDao.encontrarPorId(id);
+                            System.out.print("Valor: ");
+                            Double valor = sc.nextDouble();
+                            estoque.validarValor(valor);
 
-                    System.out.print("Nome atual do produto = " + estoque.getNome() + ". Deseja alterá-lo?(s/n) ");
-                    char escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
-                    if (escolha == 's') {
-                        System.out.print("Novo nome do produto: ");
-                        String nome = sc.next();
-                        estoque.setNome(nome);
+                            System.out.print("Quantidade: ");
+                            int quantidade = sc.nextInt();
+                            estoque.validarQuantidade(quantidade);
+
+
+                            estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade);
+                            estoqueDao.inserir(estoque);
+                            System.out.println("Produto inserido no estoque com sucesso!");
+
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Erro ao adicionar o produto: " + e.getMessage());
+                            System.out.println("Tente novamente");
+                        }
                     }
 
-                    System.out.print("Nome atual da categoria = " + estoque.getCategoria() + ". Deseja alterá-lo?(s/n) ");
-                    escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
-                    if (escolha == 's') {
-                        System.out.print("Novo nome da categoria: ");
-                        String categoria = sc.next();
-                        estoque.setCategoria(Categoria.valueOf(categoria));
+                    if (entradaEstoque == 2) {
+                        try {
+                            char escolha = 'n';
+                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+                            for(Estoque e : listaEstoque){
+                                System.out.println(e);
+                            }
+
+                            System.out.print("Qual o id do produto que deseja alterar? ");
+                            int id = sc.nextInt();
+
+                            Estoque estoque = estoqueDao.encontrarPorId(id);
+
+                            do {
+                                System.out.print("Nome atual do produto = " + estoque.getNome() + ". Deseja alterá-lo? (s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                System.out.print("Novo nome do produto: ");
+                                sc.nextLine();
+                                String nome = sc.nextLine();
+                                estoque.validarNome(nome);
+                                estoque.setNome(nome);
+                            }
+
+                            do {
+                                System.out.print("Nome atual da categoria = " + estoque.getCategoria() + ". Deseja alterá-lo?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                System.out.print("Novo nome da categoria: ");
+                                String categoria = sc.next();
+                                estoque.validarCategoria(categoria);
+                                estoque.setCategoria(Categoria.valueOf(categoria));
+                            }
+
+                            do {
+                                System.out.print("Valor atual do produto = " + estoque.getValor() + ". Deseja alterá-lo?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                System.out.print("Novo valor do produto: ");
+                                Double valor = sc.nextDouble();
+                                estoque.validarValor(valor);
+                                estoque.setValor(valor);
+                            }
+
+                            do {
+                                System.out.print("Quantidade atual do produto = " + estoque.getQuantidade() + ". Deseja alterá-lo?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                System.out.print("Nova quantidade do produto: ");
+                                int quantidade = sc.nextInt();
+                                estoque.validarQuantidade(quantidade);
+                                estoque.setQuantidade(quantidade);
+                            }
+
+                            estoqueDao.atualizar(estoque);
+                            System.out.println("Produto atualizado com sucesso!");
+
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao atualizar o produto: " + e.getMessage());
+                            System.out.println("Tente novamente");
+                        }
                     }
 
-                    System.out.print("Valor atual do produto = " + estoque.getValor() + ". Deseja alterá-lo?(s/n) ");
-                    escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
-                    if (escolha == 's') {
-                        System.out.print("Novo valor do produto: ");
-                        Double valor = sc.nextDouble();
-                        estoque.setValor(valor);
+                    if (entradaEstoque == 3) {
+                        List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+                        for(Estoque e : listaEstoque){
+                            System.out.println(e);
+                        }
+
+                        System.out.print("Qual o id do produto que deseja remover? ");
+                        int id = sc.nextInt();
+
+                        estoqueDao.deletarPorId(id);
+                        System.out.println("Produto removido com sucesso!"); //quando o produto for removido, fazer algo para tirar do itens carrinho ou equivalente para não dar problema
                     }
 
-                    System.out.print("Quantidade atual do produto = " + estoque.getQuantidade() + ". Deseja alterá-lo?(s/n) ");
-                    escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
-                    if (escolha == 's') {
-                        System.out.print("Nova quantidade do produto: ");
-                        int quantidade = sc.nextInt();
-                        estoque.setQuantidade(quantidade);
+                    if (entradaEstoque == 4) {
+                        try {
+                            System.out.print("Qual o id do produto que você está procurando? ");
+                            int id = sc.nextInt();
+
+                            Estoque estoque = estoqueDao.encontrarPorId(id);
+
+                            System.out.println(estoque);
+
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao procurar o produto: " + e.getMessage());
+                            System.out.println("Tente novamente");
+                        }
                     }
 
-                    estoqueDao.atualizar(estoque);
-                    System.out.println("Produto atualizado com sucesso!");
+                    if (entradaEstoque == 5) {
+                        List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
 
-                }
-
-                if (entradaEstoque == 3) {
-                    //mostrar uma lista com os produtos disponíveis para saber o id de qual remover
-                    System.out.print("Qual o id do produto que deseja remover? ");
-                    int id = sc.nextInt();
-
-                    estoqueDao.deletarPorId(id);
-                    System.out.println("Produto removido com sucesso!"); //quando o produto for removido, fazer algo para tirar do itens carrinho ou equivalente para não dar problema
-                }
-
-                if (entradaEstoque == 4) {
-                    System.out.print("Qual o id do produto que você está procurando? ");
-                    int id = sc.nextInt();
-
-                    Estoque estoque = estoqueDao.encontrarPorId(id);
-
-                    System.out.println(estoque);
-                }
-
-                if (entradaEstoque == 5) {
-                    List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-
-                    for (Estoque estoque : listaEstoque) {
-                        System.out.println(estoque);
+                        for (Estoque estoque : listaEstoque) {
+                            System.out.println(estoque);
+                        }
                     }
                 }
-
-                //fazer a lógica para sair do if quando digitar 0
-
             }
 
             if(entradaGerenciador == 2){

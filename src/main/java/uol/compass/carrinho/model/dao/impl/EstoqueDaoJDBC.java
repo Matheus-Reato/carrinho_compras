@@ -118,7 +118,9 @@ public class EstoqueDaoJDBC implements EstoqueDao {
                 obj.setQuantidade(rs.getInt("quantidade"));
                 return obj;
             }
-            return null;
+
+            throw new IllegalArgumentException("Este ID não existe");
+
         }
         catch (SQLException e) {
             throw new DbException(e.getMessage());
