@@ -256,44 +256,56 @@ public class Main {
                     sc.nextLine();
 
                     if (entradaCarrinho == 1) {
-                        List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-                        for (Estoque estoque : listaEstoque) {
-                            System.out.println(estoque);
+                        try {
+                            ItensCarrinho itensCarrinho = new ItensCarrinho();
+                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+                            for (Estoque estoque : listaEstoque) {
+                                System.out.println(estoque);
+                            }
+
+                            System.out.print("ID do produto: ");
+                            int idProduto = sc.nextInt();
+
+                            System.out.print("Quantidade: ");
+                            int quantidade = sc.nextInt();
+                            itensCarrinho.validarQuantidade(quantidade);
+
+                            Estoque estoque = estoqueDao.encontrarPorId(idProduto);
+
+                            itensCarrinho = new ItensCarrinho(null, estoque, quantidade, carrinho.getId());
+
+                            estoque.atualizarQuantidade(itensCarrinho);
+                            carrinho.adicionarItem(itensCarrinho);
+                            carrinhoDao.atualizar(carrinho);
+                            itensCarrinhoDao.inserir(itensCarrinho);
+                            estoqueDao.atualizar(estoque);
+
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao inserir produto no carrinho: " + e.getMessage());
                         }
-
-                        System.out.print("ID do produto: ");
-                        int idProduto = sc.nextInt();
-
-                        System.out.print("Quantidade: ");
-                        int quantidade = sc.nextInt();
-
-                        Estoque estoque = estoqueDao.encontrarPorId(idProduto);
-                        ItensCarrinho itensCarrinho = new ItensCarrinho(null, estoque, quantidade, carrinho.getId());
-                        carrinho.adicionarItem(itensCarrinho);
-                        carrinhoDao.atualizar(carrinho);
-                        itensCarrinhoDao.inserir(itensCarrinho);
                     }
 
                     if(entradaCarrinho == 2) {
-                        List<ItensCarrinho> listaItens = new ArrayList<>();
-                        System.out.print("Deseja atualizar produtos do carrinho atual?(s/n) ");
-                        char escolha = sc.next().charAt(0);
+                        try {
+                            List<ItensCarrinho> listaItens = new ArrayList<>();
+                            System.out.print("Deseja atualizar produtos do carrinho atual?(s/n) ");
+                            char escolha = sc.next().charAt(0);
 
-                        if(escolha == 's') {//verificar se existe produtos nesse carrinho
-                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
-                        }
-                        if(escolha == 'n'){//verificar se existe produtos nesse carrinho
-                            List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
-                            for (Carrinho listaCarrinho : carrinhos) {
-                                System.out.println(listaCarrinho);
+                            if (escolha == 's') {//verificar se existe produtos nesse carrinho
+                                listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
                             }
+                            if (escolha == 'n') {//verificar se existe produtos nesse carrinho
+                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
+                                for (Carrinho listaCarrinho : carrinhos) {
+                                    System.out.println(listaCarrinho);
+                                }
 
-                            System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
-                            int idCarrinho = sc.nextInt();
+                                System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
+                                int idCarrinho = sc.nextInt();
 
-                            carrinho = carrinhoDao.encontrarPorId(idCarrinho);
-                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
-                        }
+                                carrinho = carrinhoDao.encontrarPorId(idCarrinho);
+                                listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                            }
                             for (ItensCarrinho item : listaItens) {
                                 System.out.println(item);
                             }
@@ -302,15 +314,6 @@ public class Main {
                             int id = sc.nextInt();
 
                             ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(id);
-
-                            //PENSAR SE DEVO DEIXAR MOVER DE UM CARRINHO PARA OUTRO OU NÃO
-//                            System.out.print("ID atual do carrinho = " + carrinho.getId() + ". Deseja alterá-lo?(s/n) ");
-//                            escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
-//                            if (escolha == 's') {
-//                                System.out.print("Novo id do carrinho: ");
-//                                int idCarrinho = sc.nextInt();
-//                                itensCarrinho.setCarrinho_id(idCarrinho);
-//                            }
 
                             System.out.print("Produto atual do carrinho = " + itensCarrinho.getProduto() + ". Deseja alterá-lo?(s/n) ");
                             escolha = sc.next().charAt(0); // fazer loop até ser escolhido s/n
@@ -331,15 +334,22 @@ public class Main {
                             if (escolha == 's') {
                                 System.out.print("Nova quantidade de itens: ");
                                 int quantidade = sc.nextInt();
+                                itensCarrinho.validarQuantidade(quantidade);
                                 itensCarrinho.setQuantidade(quantidade);
                             }
 
+                            Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
                             itensCarrinhoDao.atualizar(itensCarrinho);
+                            estoque.atualizarQuantidade(itensCarrinho);
+                            estoqueDao.atualizar(estoque);
                             List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
                             carrinho.atualizarValorBanco(listaValores);
                             carrinhoDao.atualizar(carrinho);
 
-                        System.out.println("Produto atualizado com sucesso!");
+                            System.out.println("Produto atualizado com sucesso!");
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
+                        }
                     }
 
                     if(entradaCarrinho == 3) {
