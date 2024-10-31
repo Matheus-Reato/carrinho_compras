@@ -271,6 +271,7 @@ public class Main {
                             itensCarrinho.validarQuantidade(quantidade);
 
                             Estoque estoque = estoqueDao.encontrarPorId(idProduto);
+                            estoque.verficarDisponibilidade(estoque);
 
                             itensCarrinho = new ItensCarrinho(null, estoque, quantidade, carrinho.getId());
 
@@ -347,7 +348,7 @@ public class Main {
 
                             do {
                                 System.out.print("Quantidade atual do produto no carrinho = " + itensCarrinho.getQuantidade() + ". Deseja alterá-lo?(s/n) ");
-                                escolha = sc.next().charAt(0);
+                                escolha = sc.next().toLowerCase().charAt(0);
                             } while (escolha != 's' && escolha != 'n');
 
                             if (escolha == 's') {
@@ -358,6 +359,7 @@ public class Main {
                             }
 
                             Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
+                            estoque.verficarDisponibilidade(estoque);
                             estoque.atualizarQuantidade(itensCarrinho);
                             itensCarrinhoDao.atualizar(itensCarrinho);
                             estoqueDao.atualizar(estoque);
