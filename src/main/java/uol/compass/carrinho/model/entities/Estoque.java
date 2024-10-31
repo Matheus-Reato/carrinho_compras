@@ -1,6 +1,7 @@
 package uol.compass.carrinho.model.entities;
 
 import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.enums.Status;
 
 public class Estoque {
 
@@ -9,16 +10,18 @@ public class Estoque {
     private Categoria categoria;
     private Double valor;
     private Integer quantidade;
+    private Status status_produto;
 
     public Estoque() {
     }
 
-    public Estoque(Integer id, String nome, Categoria categoria, Double valor, Integer quantidade) {
+    public Estoque(Integer id, String nome, Categoria categoria, Double valor, Integer quantidade, Status status_produto) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;
         this.quantidade = quantidade;
+        this.status_produto = status_produto;
     }
 
     public Integer getId() {
@@ -61,6 +64,14 @@ public class Estoque {
         this.quantidade = quantidade;
     }
 
+    public Status getStatus_produto() {
+        return status_produto;
+    }
+
+    public void setStatus_produto(Status status_produto) {
+        this.status_produto = status_produto;
+    }
+
     public void validarNome(String nome) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
@@ -101,6 +112,7 @@ public class Estoque {
                 ", categoria=" + categoria +
                 ", valor=" + valor +
                 ", quantidade=" + quantidade +
+                ", status_produto=" + status_produto +
                 '}';
     }
 }

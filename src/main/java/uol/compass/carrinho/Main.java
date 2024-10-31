@@ -1,6 +1,7 @@
 package uol.compass.carrinho;
 
 import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.enums.Status;
 import uol.compass.carrinho.model.dao.CarrinhoDao;
 import uol.compass.carrinho.model.dao.DaoFactory;
 import uol.compass.carrinho.model.dao.EstoqueDao;
@@ -55,11 +56,9 @@ public class Main {
                             String nome = sc.nextLine();
                             estoque.validarNome(nome);
 
-
                             System.out.print("Categoria (CAMISETA/CALCA/CALCADO): ");
                             String categoria = sc.nextLine().toUpperCase();
                             estoque.validarCategoria(categoria);
-
 
                             System.out.print("Valor: ");
                             Double valor = sc.nextDouble();
@@ -69,8 +68,12 @@ public class Main {
                             int quantidade = sc.nextInt();
                             estoque.validarQuantidade(quantidade);
 
+                            System.out.print("Status (DISPONIVEL/INDISPONIVEL): ");
+                            sc.nextLine();
+                            String status_produto = sc.nextLine().toUpperCase();
+                            //estoque.validarStatus(status_produto); FAZER VALIDACAO
 
-                            estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade);
+                            estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade, Status.valueOf(status_produto));
                             estoqueDao.inserir(estoque);
                             System.out.println("Produto inserido no estoque com sucesso!");
 
@@ -142,6 +145,18 @@ public class Main {
                                 estoque.setQuantidade(quantidade);
                             }
 
+                            do {
+                                System.out.print("Status atual do produto = " + estoque.getStatus_produto() + ". Deseja alterá-lo?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                System.out.print("Novo status do produto: ");
+                                String status_produto = sc.next();
+                                //estoque.validarCategoria(categoria); FAZER VALIDACAO
+                                estoque.setStatus_produto(Status.valueOf(status_produto));
+                            }
+
                             estoqueDao.atualizar(estoque);
                             System.out.println("Produto atualizado com sucesso!");
 
@@ -191,7 +206,7 @@ public class Main {
 
             if(entradaGerenciador == 2){
                 Carrinho carrinho = new Carrinho(null);
-                //carrinhoDao.inserir(carrinho);
+                carrinhoDao.inserir(carrinho);
 
                 while(entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
