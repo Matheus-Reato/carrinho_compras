@@ -167,16 +167,44 @@ public class Main {
                     }
 
                     if (entradaEstoque == 3) {
+                        System.out.println("1 - Remover o produto");
+                        System.out.println("2 - Tornar o produto indisponível");
+                        System.out.println("AVISO: remover o produto também irá excluí-lo de todos os carrinhos em que o item está inserido.");
+
+                        int escolhaRemover = sc.nextInt();
+
                         List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
                         for(Estoque e : listaEstoque){
                             System.out.println(e);
                         }
 
-                        System.out.print("Qual o id do produto que deseja remover? ");
-                        int id = sc.nextInt();
+                        if(escolhaRemover == 1){
+                            System.out.print("Qual o id do produto que deseja remover? ");
+                            int id = sc.nextInt();
 
-                        estoqueDao.deletarPorId(id);
-                        System.out.println("Produto removido com sucesso!"); //quando o produto for removido, fazer algo para tirar do itens carrinho ou equivalente para não dar problema
+                            estoqueDao.deletarPorId(id);
+
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+
+                            for (Carrinho c : listaCarrinhos) {
+                                List<ItensCarrinho> itensCarrinho = itensCarrinhoDao.encontrarPorCarrinho(c);
+                                c.atualizarValorBanco(itensCarrinho);
+                                carrinhoDao.atualizar(c);
+                            }
+
+                            System.out.println("Produto removido com sucesso!"); //quando o produto for removido, fazer algo para tirar do itens carrinho ou equivalente para não dar problema
+                        }
+
+                        if(escolhaRemover == 2){
+                            System.out.print("Qual o id do produto que deseja tornar indisponível? ");
+                            int id = sc.nextInt();
+
+                            Estoque estoque = estoqueDao.encontrarPorId(id);
+                            estoque.setStatus_produto(Status.INDISPONIVEL);
+                            estoqueDao.atualizar(estoque);
+                        }
+
+
                     }
 
                     if (entradaEstoque == 4) {
@@ -206,7 +234,7 @@ public class Main {
 
             if(entradaGerenciador == 2){
                 Carrinho carrinho = new Carrinho(null);
-                carrinhoDao.inserir(carrinho);
+                //carrinhoDao.inserir(carrinho);
 
                 while(entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
