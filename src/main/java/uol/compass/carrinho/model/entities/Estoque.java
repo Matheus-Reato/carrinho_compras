@@ -118,6 +118,14 @@ public class Estoque {
         }
     }
 
+    public void atualizarQuantidade(ItensCarrinho item){
+        this.quantidade -= item.getQuantidade();
+
+        if(this.quantidade < 0){
+            throw new IllegalArgumentException("Quantidade em estoque é menor do que a selecionada.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Estoque{" +

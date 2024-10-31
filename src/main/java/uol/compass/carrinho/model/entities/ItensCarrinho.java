@@ -55,6 +55,12 @@ public class ItensCarrinho{
         return produto.getValor() * quantidade;
     }
 
+    public void validarQuantidade(Integer quantidade) {
+        if (quantidade == null || quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        }
+    }
+
     @Override
     public String toString() {
         return "ItensCarrinho{" +
