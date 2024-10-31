@@ -61,6 +61,38 @@ public class Estoque {
         this.quantidade = quantidade;
     }
 
+    public void validarNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
+        }
+    }
+
+    public void validarCategoria(String categoria) {
+        boolean valido = false;
+        if(categoria != null) {
+            for (Categoria c : Categoria.values()) {
+                if (c.name().equals(categoria)) {
+                    valido = true;
+                }
+            }
+        }
+        if(categoria == null || valido == false) {
+            throw new IllegalArgumentException("Categoria inválida! Escolha entre: CAMISETA, CALCA, CALCADO.");
+        }
+    }
+
+    public void validarValor(Double valor) {
+        if (valor == null || valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+        }
+    }
+
+    public void validarQuantidade(Integer quantidade) {
+        if (quantidade == null || quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Estoque{" +
