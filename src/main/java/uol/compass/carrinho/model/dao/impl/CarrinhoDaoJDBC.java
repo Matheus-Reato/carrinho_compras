@@ -102,7 +102,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
         ResultSet rs = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT * FROM carrinho WHERE id = ?"); //fazer um inner join com itens_carrinho pra pegar todos os itens com o mesmo id
+                    "SELECT * FROM carrinho WHERE id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
 

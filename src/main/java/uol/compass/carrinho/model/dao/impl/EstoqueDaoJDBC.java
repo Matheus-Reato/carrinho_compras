@@ -3,6 +3,7 @@ package uol.compass.carrinho.model.dao.impl;
 import uol.compass.carrinho.DB.DB;
 import uol.compass.carrinho.DB.DbException;
 import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.enums.Status;
 import uol.compass.carrinho.model.entities.Estoque;
 import uol.compass.carrinho.model.dao.EstoqueDao;
 
@@ -23,15 +24,16 @@ public class EstoqueDaoJDBC implements EstoqueDao {
         try {
             st = conn.prepareStatement(
                     "INSERT INTO estoque "
-                            + "(nome, categoria, valor, quantidade) "
+                            + "(nome, categoria, valor, quantidade, status_produto) "
                             + "VALUES "
-                            + "(?, ?, ?, ?)",
+                            + "(?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
 
             st.setString(1, obj.getNome());
             st.setString(2, obj.getCategoria().name());
             st.setDouble(3, obj.getValor());
             st.setInt(4, obj.getQuantidade());
+            st.setString(5, obj.getStatus_produto().name());
 
             int linhasAfetadas = st.executeUpdate();
 
@@ -60,14 +62,15 @@ public class EstoqueDaoJDBC implements EstoqueDao {
         try {
             st = conn.prepareStatement(
                     "UPDATE estoque "
-                            + "SET nome = ?, categoria = ?, valor = ?, quantidade = ? "
+                            + "SET nome = ?, categoria = ?, valor = ?, quantidade = ?, status_produto = ? "
                             + "WHERE Id = ?");
 
             st.setString(1, obj.getNome());
             st.setString(2, obj.getCategoria().name());
             st.setDouble(3, obj.getValor());
             st.setInt(4, obj.getQuantidade());
-            st.setInt(5, obj.getId());
+            st.setString(5, obj.getStatus_produto().name());
+            st.setInt(6, obj.getId());
 
             st.executeUpdate();
         }
@@ -116,6 +119,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
                 obj.setCategoria(Categoria.valueOf(rs.getString("categoria")));
                 obj.setValor(rs.getDouble("valor"));
                 obj.setQuantidade(rs.getInt("quantidade"));
+                obj.setStatus_produto(Status.valueOf(rs.getString("status_produto")));
                 return obj;
             }
 
@@ -150,6 +154,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
                 obj.setCategoria(Categoria.valueOf(rs.getString("categoria")));
                 obj.setValor(rs.getDouble("valor"));
                 obj.setQuantidade(rs.getInt("quantidade"));
+                obj.setStatus_produto(Status.valueOf(rs.getString("status_produto")));
                 list.add(obj);
             }
             return list;

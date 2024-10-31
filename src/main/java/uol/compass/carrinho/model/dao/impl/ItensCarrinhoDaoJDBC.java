@@ -3,6 +3,7 @@ package uol.compass.carrinho.model.dao.impl;
 import uol.compass.carrinho.DB.DB;
 import uol.compass.carrinho.DB.DbException;
 import uol.compass.carrinho.enums.Categoria;
+import uol.compass.carrinho.enums.Status;
 import uol.compass.carrinho.model.entities.Carrinho;
 import uol.compass.carrinho.model.entities.Estoque;
 import uol.compass.carrinho.model.entities.ItensCarrinho;
@@ -114,7 +115,8 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
                     + "estoque.nome AS produto_nome, "
                     + "estoque.categoria AS produto_categoria, "
                     + "estoque.valor AS produto_valor, "
-                    + "estoque.quantidade AS produto_quantidade "
+                    + "estoque.quantidade AS produto_quantidade, "
+                    + "estoque.status_produto AS produto_status "
                     + "FROM itens_carrinho "
                     + "JOIN estoque ON itens_carrinho.produto_id = estoque.id "
                     + "WHERE itens_carrinho.id = ?"
@@ -145,6 +147,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
         estoque.setCategoria(Categoria.valueOf(rs.getString("produto_categoria")));
         estoque.setValor(rs.getDouble("produto_valor"));
         estoque.setQuantidade(rs.getInt("produto_quantidade"));
+        estoque.setStatus_produto(Status.valueOf(rs.getString("produto_status")));
         return estoque;
     }
 
@@ -172,7 +175,8 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
                             + "estoque.nome AS produto_nome, "
                             + "estoque.categoria AS produto_categoria, "
                             + "estoque.valor AS produto_valor, "
-                            + "estoque.quantidade AS produto_quantidade "
+                            + "estoque.quantidade AS produto_quantidade, "
+                            + "estoque.status_produto AS produto_status "
                             + "FROM itens_carrinho "
                             + "JOIN estoque ON itens_carrinho.produto_id = estoque.id "
                             + "ORDER BY item_id"
