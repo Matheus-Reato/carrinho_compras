@@ -368,47 +368,60 @@ public class Main {
                             carrinhoDao.atualizar(carrinho);
 
                             System.out.println("Produto atualizado com sucesso!");
-                        } catch (IllegalArgumentException e){
-                            System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
-                        }
-                        catch (IllegalStateException e){
+                        } catch (IllegalArgumentException | IllegalStateException e){
                             System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
                         }
                     }
 
                     if(entradaCarrinho == 3) {
-                        List<ItensCarrinho> listaItens = new ArrayList<>();
-                        System.out.print("Deseja remover um item do carrinho atual?(s/n) ");
-                        char escolha = sc.next().charAt(0);
+                        try {
+                            List<ItensCarrinho> listaItens = new ArrayList<>();
+                            char escolha;
 
-                        if(escolha == 's') {//verificar se existe produtos nesse carrinho
-                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
-                        }
-                        if(escolha == 'n'){//verificar se existe produtos nesse carrinho
-                            List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
-                            for (Carrinho listaCarrinho : carrinhos) {
-                                System.out.println(listaCarrinho);
+                            do {
+                                System.out.print("Deseja remover um item do carrinho atual?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+                            if (escolha == 's') {
+                                listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
+                                if (listaItens.isEmpty()) {
+                                    throw new IllegalStateException("O carrinho não possui itens");
+                                }
                             }
-                            System.out.println("Qual o id do carrinho que deseja remover o item? ");
-                            int idCarrinho = sc.nextInt();
+                            if (escolha == 'n') {
+                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
+                                for (Carrinho listaCarrinho : carrinhos) {
+                                    System.out.println(listaCarrinho);
+                                }
+                                System.out.println("Qual o id do carrinho que deseja remover o item? ");
+                                int idCarrinho = sc.nextInt();
 
-                            carrinho = carrinhoDao.encontrarPorId(idCarrinho);
-                            listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                                carrinho = carrinhoDao.encontrarPorId(idCarrinho);
+                                listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
+                                if (listaItens.isEmpty()) {
+                                    throw new IllegalStateException("O carrinho não possui itens");
+                                }
+                            }
+
+                            for (ItensCarrinho item : listaItens) {
+                                System.out.println(item);
+                            }
+
+                            System.out.print("ID do item que deseja remover: ");
+                            int id = sc.nextInt();
+
+                            itensCarrinhoDao.deletarPorId(id);
+                            List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                            carrinho.atualizarValorBanco(listaValores);
+                            carrinhoDao.atualizar(carrinho);
+
+                            System.out.println("Produto removido com sucesso!");
+                        }catch(IllegalArgumentException | IllegalStateException e){
+                            System.out.println("Erro ao remover item do carrinho: " + e.getMessage());
                         }
-
-                        for (ItensCarrinho item : listaItens) {
-                            System.out.println(item);
-                        }
-
-                        System.out.print("ID do item que deseja remover: ");
-                        int id = sc.nextInt();
-
-                        itensCarrinhoDao.deletarPorId(id);
-                        List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
-                        carrinho.atualizarValorBanco(listaValores);
-                        carrinhoDao.atualizar(carrinho);
-
-                        System.out.println("Produto removido com sucesso!");
                     }
 
                     if(entradaCarrinho == 4) {
