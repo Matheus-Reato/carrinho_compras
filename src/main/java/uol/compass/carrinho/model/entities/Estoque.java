@@ -104,6 +104,20 @@ public class Estoque {
         }
     }
 
+    public void validarStatus(String status_produto) {
+        boolean valido = false;
+        if(status_produto != null) {
+            for (Status s : Status.values()) {
+                if (s.name().equals(status_produto)) {
+                    valido = true;
+                }
+            }
+        }
+        if(status_produto == null || valido == false) {
+            throw new IllegalArgumentException("Status inválido! Escolha entre: DISPONIVEL ou INDISPONIVEL.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Estoque{" +
