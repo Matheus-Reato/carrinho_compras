@@ -239,7 +239,7 @@ public class Main {
 
             if(entradaGerenciador == 2){
                 Carrinho carrinho = new Carrinho(null);
-                carrinhoDao.inserir(carrinho);
+                //carrinhoDao.inserir(carrinho);
 
                 while(entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
@@ -328,6 +328,8 @@ public class Main {
                             int id = sc.nextInt();
 
                             ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(id);
+                            Estoque produtoAntigo = itensCarrinho.getProduto();
+                            int quantidadeAntiga = itensCarrinho.getQuantidade();
 
                             do {
                                 System.out.print("Produto atual do carrinho = " + itensCarrinho.getProduto() + ". Deseja alterá-lo?(s/n) ");
@@ -339,11 +341,14 @@ public class Main {
                                 for (Estoque estoque : listaEstoque) {
                                     System.out.println(estoque);
                                 }
+
                                 System.out.println();
                                 System.out.print("Novo id do produto: ");
                                 int idProduto = sc.nextInt();
                                 Estoque estoque = estoqueDao.encontrarPorId(idProduto);
                                 itensCarrinho.setProduto(estoque);
+
+                                produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga);
                             }
 
                             do {
@@ -363,6 +368,7 @@ public class Main {
                             estoque.atualizarQuantidade(itensCarrinho);
                             itensCarrinhoDao.atualizar(itensCarrinho);
                             estoqueDao.atualizar(estoque);
+                            estoqueDao.atualizar(produtoAntigo);
                             List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
                             carrinho.atualizarValorBanco(listaValores);
                             carrinhoDao.atualizar(carrinho);
@@ -451,7 +457,7 @@ public class Main {
                         System.out.print("Qual o id do produto que você quer encontrar? ");
                         int idItem = sc.nextInt();
 
-                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);// fazer um if isEmpty e da rum throw exception
 
                         ItensCarrinho itemEspecifico = itens.stream().filter(item -> item.getId().equals(idItem)).findFirst().orElse(null);
 
