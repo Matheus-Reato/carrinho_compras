@@ -12,10 +12,7 @@ import uol.compass.carrinho.model.entities.ItensCarrinho;
 import uol.compass.carrinho.utils.CarrinhoUtils;
 import uol.compass.carrinho.utils.EstoqueUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Main {
@@ -57,6 +54,8 @@ public class Main {
                     if (entradaEstoque == 1) {
                         try {
                             Estoque estoque = new Estoque();
+                            Double valor;
+                            int quantidade;
 
                             System.out.print("Nome do produto: ");
                             String nome = sc.nextLine();
@@ -67,12 +66,22 @@ public class Main {
                             estoque.validarCategoria(categoria);
 
                             System.out.print("Valor: ");
-                            Double valor = sc.nextDouble();
-                            estoque.validarValor(valor);
+                            try {
+                                valor = sc.nextDouble();
+                                estoque.validarValor(valor);
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número decimal.");
+                            }
 
                             System.out.print("Quantidade: ");
-                            int quantidade = sc.nextInt();
-                            estoque.validarQuantidade(quantidade);
+                            try {
+                                quantidade = sc.nextInt();
+                                estoque.validarQuantidade(quantidade);
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             System.out.print("Status (DISPONIVEL/INDISPONIVEL): ");
                             sc.nextLine();
@@ -84,7 +93,7 @@ public class Main {
                             System.out.println("Produto inserido no estoque com sucesso!");
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao adicionar o produto: " + e.getMessage());
                             System.out.println();
                         }
@@ -93,13 +102,19 @@ public class Main {
                     if (entradaEstoque == 2) {
                         try {
                             char escolha;
+                            int id;
                             List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
                             for (Estoque e : listaEstoque) {
                                 System.out.println(e);
                             }
 
                             System.out.print("Qual o id do produto que deseja alterar? ");
-                            int id = sc.nextInt();
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             Estoque estoque = estoqueDao.encontrarPorId(id);
 
@@ -135,9 +150,14 @@ public class Main {
 
                             if (escolha == 's') {
                                 System.out.print("Novo valor do produto: ");
-                                Double valor = sc.nextDouble();
-                                estoque.validarValor(valor);
-                                estoque.setValor(valor);
+                                try {
+                                    Double valor = sc.nextDouble();
+                                    estoque.validarValor(valor);
+                                    estoque.setValor(valor);
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número decimal.");
+                                }
                             }
 
                             do {
@@ -147,9 +167,14 @@ public class Main {
 
                             if (escolha == 's') {
                                 System.out.print("Nova quantidade do produto: ");
-                                int quantidade = sc.nextInt();
-                                estoque.validarQuantidade(quantidade);
-                                estoque.setQuantidade(quantidade);
+                                try {
+                                    int quantidade = sc.nextInt();
+                                    estoque.validarQuantidade(quantidade);
+                                    estoque.setQuantidade(quantidade);
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
                             }
 
                             do {
@@ -168,7 +193,7 @@ public class Main {
                             System.out.println("Produto atualizado com sucesso!");
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao atualizar o produto: " + e.getMessage());
                             System.out.println();
                         }
@@ -176,21 +201,33 @@ public class Main {
 
                     if (entradaEstoque == 3) {
                         try {
+                            int escolhaRemover;
+                            int id;
                             System.out.println("1 - Remover o produto");
                             System.out.println("2 - Tornar o produto indisponível");
                             System.out.println("AVISO: remover o produto também irá excluí-lo de todos os carrinhos em que o item está inserido.");
 
-                            int escolhaRemover = sc.nextInt();
+                            try {
+                                escolhaRemover = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
                             for (Estoque e : listaEstoque) {
                                 System.out.println(e);
                             }
 
-
                             if (escolhaRemover == 1) {
                                 System.out.print("Qual o id do produto que deseja remover? ");
-                                int id = sc.nextInt();
+
+                                try {
+                                    id = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
 
                                 estoqueDao.deletarPorId(id);
 
@@ -209,7 +246,13 @@ public class Main {
 
                             if (escolhaRemover == 2) {
                                 System.out.print("Qual o id do produto que deseja tornar indisponível? ");
-                                int id = sc.nextInt();
+
+                                try {
+                                    id = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
 
                                 Estoque estoque = estoqueDao.encontrarPorId(id);
                                 estoque.setStatus_produto(Status.INDISPONIVEL);
@@ -220,7 +263,7 @@ public class Main {
                             }
 
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao remover o produto: " + e.getMessage());
                             System.out.println();
                         }
@@ -229,14 +272,22 @@ public class Main {
                     if (entradaEstoque == 4) {
                         try {
                             System.out.print("Qual o id do produto que você está procurando? ");
-                            int id = sc.nextInt();
+                            int id;
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             Estoque estoque = estoqueDao.encontrarPorId(id);
+
 
                             System.out.println(estoque);
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao procurar o produto: " + e.getMessage());
                             System.out.println();
                         }
