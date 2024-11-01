@@ -288,6 +288,8 @@ public class Main {
 
                     if(entradaCarrinho == 2) {
                         try {
+                            boolean verdadeiro = true;
+
                             List<ItensCarrinho> listaItens = new ArrayList<>();
                             char escolha;
 
@@ -300,7 +302,7 @@ public class Main {
                             if (escolha == 's') {
                                 listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
-                                if(listaItens.isEmpty()){
+                                if (listaItens.isEmpty()) {
                                     throw new IllegalStateException("O carrinho não possui itens");
                                 }
                             }
@@ -316,7 +318,7 @@ public class Main {
                                 carrinho = carrinhoDao.encontrarPorId(idCarrinho);
                                 listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
-                                if(listaItens.isEmpty()){
+                                if (listaItens.isEmpty()) {
                                     throw new IllegalStateException("O carrinho não possui itens");
                                 }
                             }
@@ -328,6 +330,8 @@ public class Main {
                             int id = sc.nextInt();
 
                             ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(id);
+
+
                             Estoque produtoAntigo = itensCarrinho.getProduto();
                             int quantidadeAntiga = itensCarrinho.getQuantidade();
 
@@ -342,12 +346,18 @@ public class Main {
                                     System.out.println(estoque);
                                 }
 
+                                verdadeiro = true;
                                 System.out.println();
                                 System.out.print("Novo id do produto: ");
                                 int idProduto = sc.nextInt();
                                 Estoque estoque = estoqueDao.encontrarPorId(idProduto);
+                                estoque.verficarDisponibilidade(estoque);
                                 itensCarrinho.setProduto(estoque);
+                                produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga); // tirar daqui e deixar no código solto, já que aparece tanto no s quanto no n
+                            }
 
+                            if (escolha == 'n') {
+                                verdadeiro = false;
                                 produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga);
                             }
 
@@ -363,19 +373,30 @@ public class Main {
                                 itensCarrinho.setQuantidade(quantidade);
                             }
 
-                            Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
-                            estoque.verficarDisponibilidade(estoque);
-                            estoque.atualizarQuantidade(itensCarrinho);
-                            itensCarrinhoDao.atualizar(itensCarrinho);
-                            estoqueDao.atualizar(estoque);
-                            estoqueDao.atualizar(produtoAntigo);
-                            List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
-                            carrinho.atualizarValorBanco(listaValores);
-                            carrinhoDao.atualizar(carrinho);
 
-                            System.out.println("Produto atualizado com sucesso!");
-                        } catch (IllegalArgumentException | IllegalStateException e){
+                            if(verdadeiro){
+                                Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
+                                estoque.atualizarQuantidade(itensCarrinho);
+                                estoqueDao.atualizar(produtoAntigo);
+                                itensCarrinhoDao.atualizar(itensCarrinho);
+                                estoqueDao.atualizar(estoque);
+                                List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                                carrinho.atualizarValorBanco(listaValores);
+                                carrinhoDao.atualizar(carrinho);
+                                System.out.println("Produto atualizado com sucesso!");
+                            } else {
+                                produtoAntigo.atualizarQuantidade(itensCarrinho);
+                                estoqueDao.atualizar(produtoAntigo);
+                                itensCarrinhoDao.atualizar(itensCarrinho);
+                                List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                                carrinho.atualizarValorBanco(listaValores);
+                                carrinhoDao.atualizar(carrinho);
+                                System.out.println("Produto atualizado com sucesso!");
+                            }
+
+                        } catch (IllegalArgumentException | IllegalStateException e) {
                             System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
+
                         }
                     }
 
