@@ -261,7 +261,13 @@ public class Main {
 
             if (entradaGerenciador == 2) {
 
-                //fazer um list com todos os carrinho e aqueles que tiverem valor total = 0 serem excluidos
+                List<Carrinho> listaExcluirCarrinhos = carrinhoDao.encontrarTodos();
+
+                for(Carrinho carrinho : listaExcluirCarrinhos){
+                    if(carrinho.getValor_total() == 0){
+                        carrinhoDao.deletarPorId(carrinho.getId());
+                    }
+                }
 
                 Carrinho carrinho = new Carrinho(null);
                 carrinhoDao.inserir(carrinho);
@@ -474,10 +480,7 @@ public class Main {
                             }
                             if (escolha == 'n') {
                                 CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
-//                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
-//                                for (Carrinho listaCarrinho : carrinhos) {
-//                                    System.out.println(listaCarrinho);
-//                                }
+
                                 System.out.println("Qual o id do carrinho que deseja remover o item? ");
                                 int idCarrinho = sc.nextInt();
 
@@ -512,10 +515,6 @@ public class Main {
                     if (entradaCarrinho == 4) {
                         try {
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
-//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-//                            for (Carrinho carrinhos : listaCarrinhos) {
-//                                System.out.println(carrinhos);
-//                            }
 
                             System.out.print("Qual o id do carrinho que deseja remover? ");
                             int id = sc.nextInt();
@@ -533,10 +532,6 @@ public class Main {
                     if (entradaCarrinho == 5) {
                         try {
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
-//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-//                            for (Carrinho carrinhos : listaCarrinhos) {
-//                                System.out.println(carrinhos);
-//                            }
 
                             System.out.print("Qual o id do carrinho que você quer procurar o item? ");
                             int id = sc.nextInt();
@@ -561,10 +556,6 @@ public class Main {
                     if (entradaCarrinho == 6) {
                         try {
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
-//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-//                            for (Carrinho carrinhos : listaCarrinhos) {
-//                                System.out.println(carrinhos);
-//                            }
 
                             System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
                             int id = sc.nextInt();
@@ -602,10 +593,7 @@ public class Main {
                     if (entradaCarrinho == 8) {
                         try {
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
-//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-//                            for (Carrinho carrinhos : listaCarrinhos) {
-//                                System.out.println(carrinhos);
-//                            }
+
                             System.out.println();
                         } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao buscar todos os carrinhos: " + e.getMessage());
