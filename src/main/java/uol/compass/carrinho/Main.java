@@ -79,7 +79,6 @@ public class Main {
 
                         } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao adicionar o produto: " + e.getMessage());
-                            System.out.println("Tente novamente");
                         }
                     }
 
@@ -162,7 +161,6 @@ public class Main {
 
                         } catch (IllegalArgumentException e){
                             System.out.println("Erro ao atualizar o produto: " + e.getMessage());
-                            System.out.println("Tente novamente");
                         }
                     }
 
@@ -208,7 +206,6 @@ public class Main {
                             }
                         } catch (IllegalArgumentException e){
                             System.out.println("Erro ao remover o produto: " + e.getMessage());
-                            System.out.println("Tente novamente");
                         }
                     }
 
@@ -223,7 +220,6 @@ public class Main {
 
                         } catch (IllegalArgumentException e){
                             System.out.println("Erro ao procurar o produto: " + e.getMessage());
-                            System.out.println("Tente novamente");
                         }
                     }
 
@@ -452,76 +448,96 @@ public class Main {
                     }
 
                     if(entradaCarrinho == 4) {
-                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                        for (Carrinho carrinhos: listaCarrinhos) {
-                            System.out.println(carrinhos);
+                        try {
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                            for (Carrinho carrinhos : listaCarrinhos) {
+                                System.out.println(carrinhos);
+                            }
+
+                            System.out.print("Qual o id do carrinho que deseja remover? ");
+                            int id = sc.nextInt();
+
+                            carrinhoDao.deletarPorId(id);
+                            System.out.println("Carrinho deletado com sucesso!");
+
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao remover carrinho: " + e.getMessage());
                         }
-
-                        System.out.print("Qual o id do carrinho que deseja remover? ");
-                        int id = sc.nextInt();
-
-                        carrinhoDao.deletarPorId(id);
-                        System.out.println("Carrinho deletado com sucesso!");
                     }
 
                     if(entradaCarrinho == 5) {
-                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                        for (Carrinho carrinhos: listaCarrinhos) {
-                            System.out.println(carrinhos);
+                        try {
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                            for (Carrinho carrinhos : listaCarrinhos) {
+                                System.out.println(carrinhos);
+                            }
+
+                            System.out.print("Qual o id do carrinho que você quer procurar o item? ");
+                            int id = sc.nextInt();
+
+                            carrinho = carrinhoDao.encontrarPorId(id);
+
+                            System.out.print("Qual o id do produto que você quer encontrar? ");
+                            int idItem = sc.nextInt();
+
+                            List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
+                            ItensCarrinho itemEspecifico = itens.stream().filter(item -> item.getId().equals(idItem)).findFirst().orElseThrow(() -> new IllegalArgumentException("Item com esse id não foi encontrado."));
+
+                            System.out.println(itemEspecifico);
+                        } catch (IllegalArgumentException | IllegalStateException e){
+                            System.out.println("Erro ao buscar id do produto: " + e.getMessage());
                         }
-
-                        System.out.print("Qual o id do carrinho que você quer procurar o item? ");
-                        int id = sc.nextInt();
-
-                        carrinho = carrinhoDao.encontrarPorId(id);
-
-                        System.out.print("Qual o id do produto que você quer encontrar? ");
-                        int idItem = sc.nextInt();
-
-                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);// fazer um if isEmpty e da rum throw exception
-
-                        ItensCarrinho itemEspecifico = itens.stream().filter(item -> item.getId().equals(idItem)).findFirst().orElse(null);
-
-                        System.out.println(itemEspecifico); //fazer validações para caso nao encontrar produto pelo id
-
                     }
 
                     if(entradaCarrinho == 6) {
-                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                        for (Carrinho carrinhos: listaCarrinhos) {
-                            System.out.println(carrinhos);
-                        }
+                        try {
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+                            for (Carrinho carrinhos : listaCarrinhos) {
+                                System.out.println(carrinhos);
+                            }
 
-                        System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
-                        int id = sc.nextInt();
+                            System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
+                            int id = sc.nextInt();
 
-                        carrinho = carrinhoDao.encontrarPorId(id);
+                            carrinho = carrinhoDao.encontrarPorId(id);
 
-                        List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                            List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
-                        for (ItensCarrinho item: itens) {
-                            System.out.println(item);
+                            for (ItensCarrinho item : itens) {
+                                System.out.println(item);
+                            }
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao buscar todos os itens do carrinho: " + e.getMessage());
                         }
                     }
 
                     if(entradaCarrinho == 7) {
-                        System.out.print("Qual o id do carrinho que você está procurando? ");
-                        int id = sc.nextInt();
+                        try {
+                            System.out.print("Qual o id do carrinho que você está procurando? ");
+                            int id = sc.nextInt();
 
-                        Carrinho carrinhoEspecifico = carrinhoDao.encontrarPorId(id);
+                            Carrinho carrinhoEspecifico = carrinhoDao.encontrarPorId(id);
 
-                        System.out.println(carrinhoEspecifico);
-                    }
-
-                    if(entradaCarrinho == 8) {
-                        List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-
-                        for (Carrinho carrinhos: listaCarrinhos) {
-                            System.out.println(carrinhos);
+                            System.out.println(carrinhoEspecifico);
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao buscar o carrinho: " + e.getMessage());
                         }
                     }
 
-                    //fazer lógica para sair do while
+                    if(entradaCarrinho == 8) {
+                        try {
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+
+                            for (Carrinho carrinhos : listaCarrinhos) {
+                                System.out.println(carrinhos);
+                            }
+                        } catch (IllegalArgumentException e){
+                            System.out.println("Erro ao buscar todos os carrinhos: " + e.getMessage());
+                        }
+                    }
+
+
                 }
             }
 
