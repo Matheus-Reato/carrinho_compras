@@ -235,7 +235,7 @@ public class Main {
 
             if(entradaGerenciador == 2){
                 Carrinho carrinho = new Carrinho(null);
-                //carrinhoDao.inserir(carrinho);
+                carrinhoDao.inserir(carrinho);
 
                 while(entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
@@ -253,6 +253,26 @@ public class Main {
 
                     if (entradaCarrinho == 1) {
                         try {
+                            char escolha;
+
+                            do {
+                                System.out.print("Deseja inserir produtos do carrinho atual #" + carrinho.getId() + "?(s/n) ");
+                                escolha = sc.next().toLowerCase().charAt(0);
+                            } while (escolha != 's' && escolha != 'n');
+
+
+                            if (escolha == 'n') {
+                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
+                                for (Carrinho listaCarrinho : carrinhos) {
+                                    System.out.println(listaCarrinho);
+                                }
+
+                                System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
+                                int idCarrinho = sc.nextInt();
+
+                                carrinho = carrinhoDao.encontrarPorId(idCarrinho);
+                            }
+
                             ItensCarrinho itensCarrinho = new ItensCarrinho();
                             List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
                             for (Estoque estoque : listaEstoque) {
@@ -290,7 +310,7 @@ public class Main {
                             char escolha;
 
                             do {
-                                System.out.print("Deseja atualizar produtos do carrinho atual?(s/n) ");
+                                System.out.print("Deseja atualizar produtos do carrinho atual #" + carrinho.getId() + "?(s/n) ");
                                 escolha = sc.next().toLowerCase().charAt(0);
                             } while (escolha != 's' && escolha != 'n');
 
@@ -368,6 +388,8 @@ public class Main {
                                 itensCarrinho.validarQuantidade(quantidade);
                                 itensCarrinho.setQuantidade(quantidade);
                             }
+
+                            //talvez fazer um sc.next para consumir a linha
 
 
                             if(verdadeiro){
@@ -536,11 +558,7 @@ public class Main {
                             System.out.println("Erro ao buscar todos os carrinhos: " + e.getMessage());
                         }
                     }
-
-
                 }
             }
-
         }
-        
     }

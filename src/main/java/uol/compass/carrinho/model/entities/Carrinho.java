@@ -46,7 +46,10 @@ public class Carrinho {
     }
 
     private void atualizarValorTotal() {
-        this.valor_total = itens.stream()
+        if(this.valor_total == null){
+            this.valor_total = 0.0;
+        }
+        this.valor_total += itens.stream()
                 .mapToDouble(ItensCarrinho::valorProduto)
                 .sum();
     }
