@@ -24,8 +24,6 @@ public class Main {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
-        int entradaEstoque = 1;
-        int entradaCarrinho = 1;
         int entradaGerenciador = 1;
 
         EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
@@ -33,6 +31,9 @@ public class Main {
         ItensCarrinhoDao itensCarrinhoDao = DaoFactory.createItensCarrinhoDao();
 
         while (entradaGerenciador != 0) {
+            int entradaEstoque = 1;
+            int entradaCarrinho = 1;
+
             System.out.println("O que você deseja gerenciar?");
             System.out.println("1 - Estoque");
             System.out.println("2 - Carrinho de compras");
@@ -295,7 +296,7 @@ public class Main {
                                     System.out.println(listaCarrinho);
                                 }
 
-                                System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
+                                System.out.print("Qual o id do carrinho que deseja atualizar os itens? ");
                                 int idCarrinho = sc.nextInt();
 
                                 carrinho = carrinhoDao.encontrarPorId(idCarrinho);
@@ -304,11 +305,6 @@ public class Main {
                             ItensCarrinho itensCarrinho = new ItensCarrinho();
 
                             EstoqueUtils.exibirListaEstoque(estoqueDao);
-
-//                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-//                            for (Estoque estoque : listaEstoque) {
-//                                System.out.println(estoque);
-//                            }
 
                             System.out.print("ID do produto: ");
                             int idProduto = sc.nextInt();
@@ -326,6 +322,11 @@ public class Main {
                             carrinho.adicionarItem(itensCarrinho);
                             carrinhoDao.atualizar(carrinho);
                             itensCarrinhoDao.inserir(itensCarrinho);
+
+                            List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+                            carrinho.atualizarValorBanco(listaValores);
+                            carrinhoDao.atualizar(carrinho);
+
                             estoqueDao.atualizar(estoque);
 
                             System.out.println("Produto inserido com sucesso!");
@@ -460,7 +461,7 @@ public class Main {
                             char escolha;
 
                             do {
-                                System.out.print("Deseja remover um item do carrinho atual?(s/n) ");
+                                System.out.print("Deseja remover um item do carrinho atual #" + carrinho.getId() + "?(s/n) ");
                                 escolha = sc.next().toLowerCase().charAt(0);
                             } while (escolha != 's' && escolha != 'n');
 
