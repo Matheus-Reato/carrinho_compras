@@ -190,6 +190,16 @@ public class Main {
                             }
 
                             estoqueDao.atualizar(estoque);
+
+                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+
+                            //Se fosse pensar em uma base de dados grande, fica inviável atualizar todos os carrinhos de compra
+                            for (Carrinho c : listaCarrinhos) {
+                                List<ItensCarrinho> itensCarrinho = itensCarrinhoDao.encontrarPorCarrinho(c);
+                                c.atualizarValorBanco(itensCarrinho);
+                                carrinhoDao.atualizar(c);
+                            }
+
                             System.out.println("Produto atualizado com sucesso!");
                             System.out.println();
 
