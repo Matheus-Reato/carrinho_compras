@@ -9,6 +9,8 @@ import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
 import uol.compass.carrinho.model.entities.Carrinho;
 import uol.compass.carrinho.model.entities.Estoque;
 import uol.compass.carrinho.model.entities.ItensCarrinho;
+import uol.compass.carrinho.utils.CarrinhoUtils;
+import uol.compass.carrinho.utils.EstoqueUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +26,23 @@ public class Main {
 
         int entradaEstoque = 1;
         int entradaCarrinho = 1;
+        int entradaGerenciador = 1;
 
         EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
         CarrinhoDao carrinhoDao = DaoFactory.createCarrinhoDao();
         ItensCarrinhoDao itensCarrinhoDao = DaoFactory.createItensCarrinhoDao();
 
-        System.out.println("O que você deseja gerenciar?");
-        System.out.println("1 - Estoque");
-        System.out.println("2 - Carrinho de compras");
+        while (entradaGerenciador != 0) {
+            System.out.println("O que você deseja gerenciar?");
+            System.out.println("1 - Estoque");
+            System.out.println("2 - Carrinho de compras");
+            System.out.println("0 - Sair");
 
-        int entradaGerenciador = sc.nextInt(); // fazer loop até inserir uma entrada válida
+            entradaGerenciador = sc.nextInt();
 
             if (entradaGerenciador == 1) {
 
-                while(entradaEstoque != 0) {
+                while (entradaEstoque != 0) {
                     System.out.println("1 - Adicionar produto ao estoque");
                     System.out.println("2 - Atualizar produto do estoque");
                     System.out.println("3 - Remover produto do estoque");
@@ -76,17 +81,19 @@ public class Main {
                             estoque = new Estoque(null, nome, Categoria.valueOf(categoria), valor, quantidade, Status.valueOf(status_produto));
                             estoqueDao.inserir(estoque);
                             System.out.println("Produto inserido no estoque com sucesso!");
+                            System.out.println();
 
                         } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao adicionar o produto: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
                     if (entradaEstoque == 2) {
                         try {
-                            char escolha = 'n';
+                            char escolha;
                             List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-                            for(Estoque e : listaEstoque){
+                            for (Estoque e : listaEstoque) {
                                 System.out.println(e);
                             }
 
@@ -96,7 +103,7 @@ public class Main {
                             Estoque estoque = estoqueDao.encontrarPorId(id);
 
                             do {
-                                System.out.print("Nome atual do produto = " + estoque.getNome() + ". Deseja alterá-lo? (s/n) ");
+                                System.out.print("Nome atual do produto = " + estoque.getNome() + ". Deseja alterá-lo?(s/n) ");
                                 escolha = sc.next().toLowerCase().charAt(0);
                             } while (escolha != 's' && escolha != 'n');
 
@@ -158,9 +165,11 @@ public class Main {
 
                             estoqueDao.atualizar(estoque);
                             System.out.println("Produto atualizado com sucesso!");
+                            System.out.println();
 
-                        } catch (IllegalArgumentException e){
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao atualizar o produto: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
@@ -194,6 +203,7 @@ public class Main {
                                 }
 
                                 System.out.println("Produto removido com sucesso!");
+                                System.out.println();
                             }
 
                             if (escolhaRemover == 2) {
@@ -203,9 +213,15 @@ public class Main {
                                 Estoque estoque = estoqueDao.encontrarPorId(id);
                                 estoque.setStatus_produto(Status.INDISPONIVEL);
                                 estoqueDao.atualizar(estoque);
+
+                                System.out.println("Produto tornou-se indisponível!");
+                                System.out.println();
                             }
-                        } catch (IllegalArgumentException e){
+
+
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao remover o produto: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
@@ -217,27 +233,39 @@ public class Main {
                             Estoque estoque = estoqueDao.encontrarPorId(id);
 
                             System.out.println(estoque);
+                            System.out.println();
 
-                        } catch (IllegalArgumentException e){
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao procurar o produto: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
                     if (entradaEstoque == 5) {
-                        List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+                        try {
+                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
 
-                        for (Estoque estoque : listaEstoque) {
-                            System.out.println(estoque);
+                            for (Estoque estoque : listaEstoque) {
+                                System.out.println(estoque);
+                            }
+
+                            System.out.println();
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Erro ao procurar todos os produtos: " + e.getMessage());
+                            System.out.println();
                         }
                     }
                 }
             }
 
-            if(entradaGerenciador == 2){
+            if (entradaGerenciador == 2) {
+
+                //fazer um list com todos os carrinho e aqueles que tiverem valor total = 0 serem excluidos
+
                 Carrinho carrinho = new Carrinho(null);
                 carrinhoDao.inserir(carrinho);
 
-                while(entradaCarrinho != 0) {
+                while (entradaCarrinho != 0) {
                     System.out.println("1 - Adicionar item ao carrinho");
                     System.out.println("2 - Atualizar item do carrinho");
                     System.out.println("3 - Remover item do carrinho");
@@ -274,10 +302,13 @@ public class Main {
                             }
 
                             ItensCarrinho itensCarrinho = new ItensCarrinho();
-                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
-                            for (Estoque estoque : listaEstoque) {
-                                System.out.println(estoque);
-                            }
+
+                            EstoqueUtils.exibirListaEstoque(estoqueDao);
+
+//                            List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+//                            for (Estoque estoque : listaEstoque) {
+//                                System.out.println(estoque);
+//                            }
 
                             System.out.print("ID do produto: ");
                             int idProduto = sc.nextInt();
@@ -297,12 +328,16 @@ public class Main {
                             itensCarrinhoDao.inserir(itensCarrinho);
                             estoqueDao.atualizar(estoque);
 
-                        } catch (IllegalArgumentException e){
+                            System.out.println("Produto inserido com sucesso!");
+                            System.out.println();
+
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao inserir produto no carrinho: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 2) {
+                    if (entradaCarrinho == 2) {
                         try {
                             boolean verdadeiro = true;
 
@@ -362,7 +397,6 @@ public class Main {
                                     System.out.println(estoque);
                                 }
 
-                                verdadeiro = true;
                                 System.out.println();
                                 System.out.print("Novo id do produto: ");
                                 int idProduto = sc.nextInt();
@@ -392,7 +426,7 @@ public class Main {
                             //talvez fazer um sc.next para consumir a linha
 
 
-                            if(verdadeiro){
+                            if (verdadeiro) {
                                 Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
                                 estoque.atualizarQuantidade(itensCarrinho);
                                 estoqueDao.atualizar(produtoAntigo);
@@ -402,6 +436,7 @@ public class Main {
                                 carrinho.atualizarValorBanco(listaValores);
                                 carrinhoDao.atualizar(carrinho);
                                 System.out.println("Produto atualizado com sucesso!");
+                                System.out.println();
                             } else {
                                 produtoAntigo.atualizarQuantidade(itensCarrinho);
                                 estoqueDao.atualizar(produtoAntigo);
@@ -410,15 +445,16 @@ public class Main {
                                 carrinho.atualizarValorBanco(listaValores);
                                 carrinhoDao.atualizar(carrinho);
                                 System.out.println("Produto atualizado com sucesso!");
+                                System.out.println();
                             }
 
                         } catch (IllegalArgumentException | IllegalStateException e) {
                             System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
-
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 3) {
+                    if (entradaCarrinho == 3) {
                         try {
                             List<ItensCarrinho> listaItens = new ArrayList<>();
                             char escolha;
@@ -436,10 +472,11 @@ public class Main {
                                 }
                             }
                             if (escolha == 'n') {
-                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
-                                for (Carrinho listaCarrinho : carrinhos) {
-                                    System.out.println(listaCarrinho);
-                                }
+                                CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+//                                List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
+//                                for (Carrinho listaCarrinho : carrinhos) {
+//                                    System.out.println(listaCarrinho);
+//                                }
                                 System.out.println("Qual o id do carrinho que deseja remover o item? ");
                                 int idCarrinho = sc.nextInt();
 
@@ -464,35 +501,41 @@ public class Main {
                             carrinhoDao.atualizar(carrinho);
 
                             System.out.println("Produto removido com sucesso!");
-                        }catch(IllegalArgumentException | IllegalStateException e){
+                            System.out.println();
+                        } catch (IllegalArgumentException | IllegalStateException e) {
                             System.out.println("Erro ao remover item do carrinho: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 4) {
+                    if (entradaCarrinho == 4) {
                         try {
-                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                            for (Carrinho carrinhos : listaCarrinhos) {
-                                System.out.println(carrinhos);
-                            }
+                            CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+//                            for (Carrinho carrinhos : listaCarrinhos) {
+//                                System.out.println(carrinhos);
+//                            }
 
                             System.out.print("Qual o id do carrinho que deseja remover? ");
                             int id = sc.nextInt();
 
                             carrinhoDao.deletarPorId(id);
                             System.out.println("Carrinho deletado com sucesso!");
+                            System.out.println();
 
-                        } catch (IllegalArgumentException e){
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao remover carrinho: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 5) {
+                    if (entradaCarrinho == 5) {
                         try {
-                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                            for (Carrinho carrinhos : listaCarrinhos) {
-                                System.out.println(carrinhos);
-                            }
+                            CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+//                            for (Carrinho carrinhos : listaCarrinhos) {
+//                                System.out.println(carrinhos);
+//                            }
 
                             System.out.print("Qual o id do carrinho que você quer procurar o item? ");
                             int id = sc.nextInt();
@@ -507,17 +550,20 @@ public class Main {
                             ItensCarrinho itemEspecifico = itens.stream().filter(item -> item.getId().equals(idItem)).findFirst().orElseThrow(() -> new IllegalArgumentException("Item com esse id não foi encontrado."));
 
                             System.out.println(itemEspecifico);
-                        } catch (IllegalArgumentException | IllegalStateException e){
+                            System.out.println();
+                        } catch (IllegalArgumentException | IllegalStateException e) {
                             System.out.println("Erro ao buscar id do produto: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 6) {
+                    if (entradaCarrinho == 6) {
                         try {
-                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-                            for (Carrinho carrinhos : listaCarrinhos) {
-                                System.out.println(carrinhos);
-                            }
+                            CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+//                            for (Carrinho carrinhos : listaCarrinhos) {
+//                                System.out.println(carrinhos);
+//                            }
 
                             System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
                             int id = sc.nextInt();
@@ -529,12 +575,14 @@ public class Main {
                             for (ItensCarrinho item : itens) {
                                 System.out.println(item);
                             }
-                        } catch (IllegalArgumentException e){
+                            System.out.println();
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao buscar todos os itens do carrinho: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 7) {
+                    if (entradaCarrinho == 7) {
                         try {
                             System.out.print("Qual o id do carrinho que você está procurando? ");
                             int id = sc.nextInt();
@@ -542,23 +590,29 @@ public class Main {
                             Carrinho carrinhoEspecifico = carrinhoDao.encontrarPorId(id);
 
                             System.out.println(carrinhoEspecifico);
-                        } catch (IllegalArgumentException e){
+                            System.out.println();
+
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao buscar o carrinho: " + e.getMessage());
+                            System.out.println();
                         }
                     }
 
-                    if(entradaCarrinho == 8) {
+                    if (entradaCarrinho == 8) {
                         try {
-                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
-
-                            for (Carrinho carrinhos : listaCarrinhos) {
-                                System.out.println(carrinhos);
-                            }
-                        } catch (IllegalArgumentException e){
+                            CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+//                            List<Carrinho> listaCarrinhos = carrinhoDao.encontrarTodos();
+//                            for (Carrinho carrinhos : listaCarrinhos) {
+//                                System.out.println(carrinhos);
+//                            }
+                            System.out.println();
+                        } catch (IllegalArgumentException e) {
                             System.out.println("Erro ao buscar todos os carrinhos: " + e.getMessage());
+                            System.out.println();
                         }
                     }
                 }
             }
         }
     }
+}
