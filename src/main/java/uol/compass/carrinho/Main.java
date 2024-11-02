@@ -349,6 +349,9 @@ public class Main {
 
                     if (entradaCarrinho == 1) {
                         try {
+                            int idCarrinho;
+                            int idProduto;
+                            int quantidade;
                             char escolha;
 
                             do {
@@ -364,7 +367,13 @@ public class Main {
                                 }
 
                                 System.out.print("Qual o id do carrinho que deseja atualizar os itens? ");
-                                int idCarrinho = sc.nextInt();
+
+                                try {
+                                    idCarrinho = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número decimal.");
+                                }
 
                                 carrinho = carrinhoDao.encontrarPorId(idCarrinho);
                             }
@@ -374,10 +383,24 @@ public class Main {
                             EstoqueUtils.exibirListaEstoque(estoqueDao);
 
                             System.out.print("ID do produto: ");
-                            int idProduto = sc.nextInt();
+
+                            try {
+                                idProduto = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             System.out.print("Quantidade: ");
-                            int quantidade = sc.nextInt();
+
+                            try {
+                                quantidade = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
+
+
                             itensCarrinho.validarQuantidade(quantidade);
 
                             Estoque estoque = estoqueDao.encontrarPorId(idProduto);
@@ -399,7 +422,7 @@ public class Main {
                             System.out.println("Produto inserido com sucesso!");
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao inserir produto no carrinho: " + e.getMessage());
                             System.out.println();
                         }
@@ -407,6 +430,10 @@ public class Main {
 
                     if (entradaCarrinho == 2) {
                         try {
+                            int idCarrinho;
+                            int id;
+                            int idProduto;
+                            int quantidade;
                             boolean verdadeiro = true;
 
                             List<ItensCarrinho> listaItens = new ArrayList<>();
@@ -432,7 +459,13 @@ public class Main {
                                 }
 
                                 System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
-                                int idCarrinho = sc.nextInt();
+
+                                try {
+                                    idCarrinho = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
 
                                 carrinho = carrinhoDao.encontrarPorId(idCarrinho);
                                 listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
@@ -446,7 +479,13 @@ public class Main {
                             }
 
                             System.out.print("ID do item que deseja atualizar: ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(id);
 
@@ -467,7 +506,14 @@ public class Main {
 
                                 System.out.println();
                                 System.out.print("Novo id do produto: ");
-                                int idProduto = sc.nextInt();
+
+                                try {
+                                    idProduto = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
+
                                 Estoque estoque = estoqueDao.encontrarPorId(idProduto);
                                 estoque.verficarDisponibilidade(estoque);
                                 itensCarrinho.setProduto(estoque);
@@ -486,13 +532,17 @@ public class Main {
 
                             if (escolha == 's') {
                                 System.out.print("Nova quantidade de itens: ");
-                                int quantidade = sc.nextInt();
+
+                                try {
+                                    quantidade = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
+
                                 itensCarrinho.validarQuantidade(quantidade);
                                 itensCarrinho.setQuantidade(quantidade);
                             }
-
-                            //talvez fazer um sc.next para consumir a linha
-
 
                             if (verdadeiro) {
                                 Estoque estoque = estoqueDao.encontrarPorId(itensCarrinho.getProduto().getId());
@@ -516,7 +566,7 @@ public class Main {
                                 System.out.println();
                             }
 
-                        } catch (IllegalArgumentException | IllegalStateException e) {
+                        } catch (IllegalArgumentException | IllegalStateException | InputMismatchException e) {
                             System.out.println("Erro ao atualizar item do carrinho: " + e.getMessage());
                             System.out.println();
                         }
@@ -526,6 +576,8 @@ public class Main {
                         try {
                             List<ItensCarrinho> listaItens = new ArrayList<>();
                             char escolha;
+                            int idCarrinho;
+                            int id;
 
                             do {
                                 System.out.print("Deseja remover um item do carrinho atual #" + carrinho.getId() + "?(s/n) ");
@@ -543,7 +595,13 @@ public class Main {
                                 CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
 
                                 System.out.println("Qual o id do carrinho que deseja remover o item? ");
-                                int idCarrinho = sc.nextInt();
+
+                                try {
+                                    idCarrinho = sc.nextInt();
+                                } catch (InputMismatchException e) {
+                                    sc.nextLine();
+                                    throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                }
 
                                 carrinho = carrinhoDao.encontrarPorId(idCarrinho);
                                 listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
@@ -558,7 +616,13 @@ public class Main {
                             }
 
                             System.out.print("ID do item que deseja remover: ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             itensCarrinhoDao.deletarPorId(id);
                             List<ItensCarrinho> listaValores = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
@@ -567,7 +631,7 @@ public class Main {
 
                             System.out.println("Produto removido com sucesso!");
                             System.out.println();
-                        } catch (IllegalArgumentException | IllegalStateException e) {
+                        } catch (IllegalArgumentException | IllegalStateException | InputMismatchException e) {
                             System.out.println("Erro ao remover item do carrinho: " + e.getMessage());
                             System.out.println();
                         }
@@ -575,16 +639,23 @@ public class Main {
 
                     if (entradaCarrinho == 4) {
                         try {
+                            int id;
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
 
                             System.out.print("Qual o id do carrinho que deseja remover? ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             carrinhoDao.deletarPorId(id);
                             System.out.println("Carrinho deletado com sucesso!");
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao remover carrinho: " + e.getMessage());
                             System.out.println();
                         }
@@ -592,15 +663,29 @@ public class Main {
 
                     if (entradaCarrinho == 5) {
                         try {
+                            int id;
+                            int idItem;
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
 
                             System.out.print("Qual o id do carrinho que você quer procurar o item? ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             carrinho = carrinhoDao.encontrarPorId(id);
 
                             System.out.print("Qual o id do produto que você quer encontrar? ");
-                            int idItem = sc.nextInt();
+
+                            try {
+                                idItem = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
@@ -608,7 +693,7 @@ public class Main {
 
                             System.out.println(itemEspecifico);
                             System.out.println();
-                        } catch (IllegalArgumentException | IllegalStateException e) {
+                        } catch (IllegalArgumentException | IllegalStateException | InputMismatchException e) {
                             System.out.println("Erro ao buscar id do produto: " + e.getMessage());
                             System.out.println();
                         }
@@ -616,20 +701,31 @@ public class Main {
 
                     if (entradaCarrinho == 6) {
                         try {
+                            int id;
                             CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
 
                             System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             carrinho = carrinhoDao.encontrarPorId(id);
 
                             List<ItensCarrinho> itens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
+                            if (itens.isEmpty()) {
+                                throw new IllegalStateException("O carrinho não possui itens");
+                            }
+
                             for (ItensCarrinho item : itens) {
                                 System.out.println(item);
                             }
                             System.out.println();
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | IllegalStateException |InputMismatchException e) {
                             System.out.println("Erro ao buscar todos os itens do carrinho: " + e.getMessage());
                             System.out.println();
                         }
@@ -637,15 +733,22 @@ public class Main {
 
                     if (entradaCarrinho == 7) {
                         try {
+                            int id;
                             System.out.print("Qual o id do carrinho que você está procurando? ");
-                            int id = sc.nextInt();
+
+                            try {
+                                id = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                sc.nextLine();
+                                throw new InputMismatchException("O valor deve ser um número inteiro.");
+                            }
 
                             Carrinho carrinhoEspecifico = carrinhoDao.encontrarPorId(id);
 
                             System.out.println(carrinhoEspecifico);
                             System.out.println();
 
-                        } catch (IllegalArgumentException e) {
+                        } catch (IllegalArgumentException | InputMismatchException e) {
                             System.out.println("Erro ao buscar o carrinho: " + e.getMessage());
                             System.out.println();
                         }
