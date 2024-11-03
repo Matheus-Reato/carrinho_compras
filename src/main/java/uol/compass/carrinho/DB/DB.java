@@ -33,7 +33,7 @@ public class DB {
     }
 
     private static Properties carregarPropriedades() {
-        try (FileInputStream fs = new FileInputStream("db.properties")) {
+        try (FileInputStream fs = new FileInputStream("db.propriedades")) {
             Properties props = new Properties();
             props.load(fs);
             return props;
