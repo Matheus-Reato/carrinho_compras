@@ -1,13 +1,13 @@
-package uol.compass.carrinho.model.dao.impl;
+package uol.compass.carrinho.modelo.dao.impl;
 
 import uol.compass.carrinho.DB.DB;
-import uol.compass.carrinho.DB.DbException;
+import uol.compass.carrinho.DB.DbExcessao;
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.enums.Status;
-import uol.compass.carrinho.model.entities.Carrinho;
-import uol.compass.carrinho.model.entities.Estoque;
-import uol.compass.carrinho.model.entities.ItensCarrinho;
-import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
+import uol.compass.carrinho.modelo.entidades.Carrinho;
+import uol.compass.carrinho.modelo.entidades.Estoque;
+import uol.compass.carrinho.modelo.entidades.ItensCarrinho;
+import uol.compass.carrinho.modelo.dao.ItensCarrinhoDao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -49,11 +49,11 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
                 DB.fecharResultSet(rs);
             }
             else {
-                throw new DbException("Erro! Nenhuma linha foi afetada.");
+                throw new DbExcessao("Erro! Nenhuma linha foi afetada.");
             }
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -77,7 +77,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -95,7 +95,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -132,7 +132,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new IllegalArgumentException("Este ID não existe");
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -202,7 +202,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             return itens;
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);

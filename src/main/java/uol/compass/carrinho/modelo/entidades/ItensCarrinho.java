@@ -1,6 +1,4 @@
-package uol.compass.carrinho.model.entities;
-
-import uol.compass.carrinho.model.entities.Estoque;
+package uol.compass.carrinho.modelo.entidades;
 
 public class ItensCarrinho{
 

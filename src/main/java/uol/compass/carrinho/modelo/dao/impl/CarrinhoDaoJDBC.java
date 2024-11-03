@@ -1,9 +1,9 @@
-package uol.compass.carrinho.model.dao.impl;
+package uol.compass.carrinho.modelo.dao.impl;
 
 import uol.compass.carrinho.DB.DB;
-import uol.compass.carrinho.DB.DbException;
-import uol.compass.carrinho.model.entities.Carrinho;
-import uol.compass.carrinho.model.dao.CarrinhoDao;
+import uol.compass.carrinho.DB.DbExcessao;
+import uol.compass.carrinho.modelo.entidades.Carrinho;
+import uol.compass.carrinho.modelo.dao.CarrinhoDao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,11 +43,11 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
                 DB.fecharResultSet(rs);
             }
             else {
-                throw new DbException("Erro! Nenhuma linha foi afetada.");
+                throw new DbExcessao("Erro! Nenhuma linha foi afetada.");
             }
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -69,7 +69,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -88,7 +88,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -115,7 +115,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
             throw new IllegalArgumentException("Este ID não existe");
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -144,7 +144,7 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
             return list;
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);

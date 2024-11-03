@@ -1,11 +1,11 @@
-package uol.compass.carrinho.model.dao.impl;
+package uol.compass.carrinho.modelo.dao.impl;
 
 import uol.compass.carrinho.DB.DB;
-import uol.compass.carrinho.DB.DbException;
+import uol.compass.carrinho.DB.DbExcessao;
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.enums.Status;
-import uol.compass.carrinho.model.entities.Estoque;
-import uol.compass.carrinho.model.dao.EstoqueDao;
+import uol.compass.carrinho.modelo.entidades.Estoque;
+import uol.compass.carrinho.modelo.dao.EstoqueDao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -46,11 +46,11 @@ public class EstoqueDaoJDBC implements EstoqueDao {
                 DB.fecharResultSet(rs);
             }
             else {
-                throw new DbException("Erro! Nenhuma linha foi afetada.");
+                throw new DbExcessao("Erro! Nenhuma linha foi afetada.");
             }
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -75,7 +75,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -94,7 +94,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             st.executeUpdate();
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -126,7 +126,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);
@@ -159,7 +159,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             return list;
         }
         catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            throw new DbExcessao(e.getMessage());
         }
         finally {
             DB.fecharStatement(st);

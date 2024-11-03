@@ -1,11 +1,11 @@
-package uol.compass.carrinho.model.dao;
+package uol.compass.carrinho.modelo.dao;
 
 import uol.compass.carrinho.DB.DB;
-import uol.compass.carrinho.model.dao.impl.CarrinhoDaoJDBC;
-import uol.compass.carrinho.model.dao.impl.EstoqueDaoJDBC;
-import uol.compass.carrinho.model.dao.impl.ItensCarrinhoDaoJDBC;
+import uol.compass.carrinho.modelo.dao.impl.CarrinhoDaoJDBC;
+import uol.compass.carrinho.modelo.dao.impl.EstoqueDaoJDBC;
+import uol.compass.carrinho.modelo.dao.impl.ItensCarrinhoDaoJDBC;
 
-public class DaoFactory {
+public class DaoFabrica {
 
     public static CarrinhoDao criarCarrinhoDao() {
         return new CarrinhoDaoJDBC(DB.getConnection());

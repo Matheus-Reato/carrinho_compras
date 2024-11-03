@@ -1,6 +1,6 @@
-package uol.compass.carrinho.model.dao;
+package uol.compass.carrinho.modelo.dao;
 
-import uol.compass.carrinho.model.entities.Estoque;
+import uol.compass.carrinho.modelo.entidades.Estoque;
 
 import java.util.List;
 
