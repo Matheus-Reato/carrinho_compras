@@ -11,7 +11,7 @@ public class DB {
     public static Connection getConnection() {
         if (conn == null) {
             try {
-                Properties props = loadProperties();
+                Properties props = carregarPropriedades();
                 String url = props.getProperty("dburl");
                 conn = DriverManager.getConnection(url, props);
             }
@@ -22,7 +22,7 @@ public class DB {
         return conn;
     }
 
-    public static void closeConnection() {
+    public static void fecharConexao() {
         if (conn != null) {
             try {
                 conn.close();
@@ -32,7 +32,7 @@ public class DB {
         }
     }
 
-    private static Properties loadProperties() {
+    private static Properties carregarPropriedades() {
         try (FileInputStream fs = new FileInputStream("db.properties")) {
             Properties props = new Properties();
             props.load(fs);
@@ -43,7 +43,7 @@ public class DB {
         }
     }
 
-    public static void closeStatement(Statement st) {
+    public static void fecharStatement(Statement st) {
         if (st != null) {
             try {
                 st.close();
@@ -53,7 +53,7 @@ public class DB {
         }
     }
 
-    public static void closeResultSet(ResultSet rs) {
+    public static void fecharResultSet(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();

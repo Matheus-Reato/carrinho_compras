@@ -23,9 +23,9 @@ public class Main {
 
         int entradaGerenciador = 1;
 
-        EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
-        CarrinhoDao carrinhoDao = DaoFactory.createCarrinhoDao();
-        ItensCarrinhoDao itensCarrinhoDao = DaoFactory.createItensCarrinhoDao();
+        EstoqueDao estoqueDao = DaoFactory.criarEstoqueDao();
+        CarrinhoDao carrinhoDao = DaoFactory.criarCarrinhoDao();
+        ItensCarrinhoDao itensCarrinhoDao = DaoFactory.criarItensCarrinhoDao();
 
         while (entradaGerenciador != 0) {
             try {
@@ -789,12 +789,14 @@ public class Main {
                                     System.out.println();
                                 }
                             }
+
                         } catch (InputMismatchException e) {
                             System.out.println("Erro ao selecionar opção: " + e.getMessage());
                             System.out.println();
                         }
                     }
                 }
+
             } catch (InputMismatchException e){
                 System.out.println("Erro ao selecionar opção: " + e.getMessage());
                 System.out.println();

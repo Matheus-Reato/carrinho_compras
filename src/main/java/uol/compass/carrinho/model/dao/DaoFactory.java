@@ -7,15 +7,15 @@ import uol.compass.carrinho.model.dao.impl.ItensCarrinhoDaoJDBC;
 
 public class DaoFactory {
 
-    public static CarrinhoDao createCarrinhoDao() {
+    public static CarrinhoDao criarCarrinhoDao() {
         return new CarrinhoDaoJDBC(DB.getConnection());
     }
 
-    public static EstoqueDao createEstoqueDao() {
+    public static EstoqueDao criarEstoqueDao() {
         return new EstoqueDaoJDBC(DB.getConnection());
     }
 
-    public static ItensCarrinhoDao createItensCarrinhoDao() {
+    public static ItensCarrinhoDao criarItensCarrinhoDao() {
         return new ItensCarrinhoDaoJDBC(DB.getConnection());
     }
 }
