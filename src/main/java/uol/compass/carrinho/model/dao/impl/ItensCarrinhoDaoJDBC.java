@@ -46,7 +46,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
                     int id = rs.getInt(1);
                     obj.setId(id);
                 }
-                DB.closeResultSet(rs);
+                DB.fecharResultSet(rs);
             }
             else {
                 throw new DbException("Erro! Nenhuma linha foi afetada.");
@@ -56,7 +56,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new DbException(e.getMessage());
         }
         finally {
-            DB.closeStatement(st);
+            DB.fecharStatement(st);
         }
     }
 
@@ -80,7 +80,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new DbException(e.getMessage());
         }
         finally {
-            DB.closeStatement(st);
+            DB.fecharStatement(st);
         }
     }
 
@@ -98,7 +98,7 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new DbException(e.getMessage());
         }
         finally {
-            DB.closeStatement(st);
+            DB.fecharStatement(st);
         }
     }
 
@@ -135,8 +135,8 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new DbException(e.getMessage());
         }
         finally {
-            DB.closeStatement(st);
-            DB.closeResultSet(rs);
+            DB.fecharStatement(st);
+            DB.fecharResultSet(rs);
         }
     }
 
@@ -205,8 +205,8 @@ public class ItensCarrinhoDaoJDBC implements ItensCarrinhoDao {
             throw new DbException(e.getMessage());
         }
         finally {
-            DB.closeStatement(st);
-            DB.closeResultSet(rs);
+            DB.fecharStatement(st);
+            DB.fecharResultSet(rs);
         }
     }
 
