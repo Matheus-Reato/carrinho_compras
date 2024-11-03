@@ -24,10 +24,11 @@ git clone https://github.com/Matheus-Reato/carrinho_compras.git
 * Entre no seu MySQL Workbench e crie um novo arquivo SQL
 * Use o seguinte comando para criar um novo banco de dados
 ```
-CREATE DATABASE carrinho_compras
-USE carrinho_compras
+CREATE DATABASE carrinho_compras;
+USE carrinho_compras;
 ```
 * Selecione as linhas que acabou de escrever e as execute
+* Atualize a lista de "SCHEMAS"
 
 ### Criar as tabelas do banco 
 Depois de criar o banco de dados, você irá criar as tabelas do banco, pode criar um arquivo SQL novo ou usar o mesmo que criou o banco de dados.
@@ -58,6 +59,7 @@ CREATE TABLE itens_carrinho (
 );
 ```
 * Selecione essa porção de código e execute
+* Atualize a lista de "SCHEMAS"
 
 ### Alterar informações de Usuário e Senha do arquivo db.propriedades
 
