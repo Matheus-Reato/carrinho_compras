@@ -1,11 +1,11 @@
-package uol.compass.carrinho.utils;
+package uol.compass.carrinho.utilidade;
 
-import uol.compass.carrinho.model.dao.EstoqueDao;
-import uol.compass.carrinho.model.entities.Estoque;
+import uol.compass.carrinho.modelo.dao.EstoqueDao;
+import uol.compass.carrinho.modelo.entidades.Estoque;
 
 import java.util.List;
 
-public class EstoqueUtils {
+public class EstoqueUtil {
     public static void exibirListaEstoque(EstoqueDao estoqueDao) {
         List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
         for (Estoque estoque : listaEstoque) {

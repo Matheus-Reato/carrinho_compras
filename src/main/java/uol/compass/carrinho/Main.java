@@ -2,15 +2,15 @@ package uol.compass.carrinho;
 
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.enums.Status;
-import uol.compass.carrinho.model.dao.CarrinhoDao;
-import uol.compass.carrinho.model.dao.DaoFactory;
-import uol.compass.carrinho.model.dao.EstoqueDao;
-import uol.compass.carrinho.model.dao.ItensCarrinhoDao;
-import uol.compass.carrinho.model.entities.Carrinho;
-import uol.compass.carrinho.model.entities.Estoque;
-import uol.compass.carrinho.model.entities.ItensCarrinho;
-import uol.compass.carrinho.utils.CarrinhoUtils;
-import uol.compass.carrinho.utils.EstoqueUtils;
+import uol.compass.carrinho.modelo.dao.CarrinhoDao;
+import uol.compass.carrinho.modelo.dao.DaoFabrica;
+import uol.compass.carrinho.modelo.dao.EstoqueDao;
+import uol.compass.carrinho.modelo.dao.ItensCarrinhoDao;
+import uol.compass.carrinho.modelo.entidades.Carrinho;
+import uol.compass.carrinho.modelo.entidades.Estoque;
+import uol.compass.carrinho.modelo.entidades.ItensCarrinho;
+import uol.compass.carrinho.utilidade.CarrinhoUtil;
+import uol.compass.carrinho.utilidade.EstoqueUtil;
 
 import java.util.*;
 
@@ -23,9 +23,9 @@ public class Main {
 
         int entradaGerenciador = 1;
 
-        EstoqueDao estoqueDao = DaoFactory.criarEstoqueDao();
-        CarrinhoDao carrinhoDao = DaoFactory.criarCarrinhoDao();
-        ItensCarrinhoDao itensCarrinhoDao = DaoFactory.criarItensCarrinhoDao();
+        EstoqueDao estoqueDao = DaoFabrica.criarEstoqueDao();
+        CarrinhoDao carrinhoDao = DaoFabrica.criarCarrinhoDao();
+        ItensCarrinhoDao itensCarrinhoDao = DaoFabrica.criarItensCarrinhoDao();
 
         while (entradaGerenciador != 0) {
             try {
@@ -405,7 +405,7 @@ public class Main {
 
                                     ItensCarrinho itensCarrinho = new ItensCarrinho();
 
-                                    EstoqueUtils.exibirListaEstoque(estoqueDao);
+                                    EstoqueUtil.exibirListaEstoque(estoqueDao);
 
                                     System.out.print("ID do produto: ");
 
@@ -617,7 +617,7 @@ public class Main {
                                         }
                                     }
                                     if (escolha == 'n') {
-                                        CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+                                        CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
                                         System.out.println("Qual o id do carrinho que deseja remover o item? ");
 
@@ -665,7 +665,7 @@ public class Main {
                             if (entradaCarrinho == 4) {
                                 try {
                                     int id;
-                                    CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+                                    CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
                                     System.out.print("Qual o id do carrinho que deseja remover? ");
 
@@ -690,7 +690,7 @@ public class Main {
                                 try {
                                     int id;
                                     int idItem;
-                                    CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+                                    CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
                                     System.out.print("Qual o id do carrinho que você quer procurar o item? ");
 
@@ -727,7 +727,7 @@ public class Main {
                             if (entradaCarrinho == 6) {
                                 try {
                                     int id;
-                                    CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+                                    CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
                                     System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
 
@@ -781,7 +781,7 @@ public class Main {
 
                             if (entradaCarrinho == 8) {
                                 try {
-                                    CarrinhoUtils.exibirListaCarrinhos(carrinhoDao);
+                                    CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
                                     System.out.println();
                                 } catch (IllegalArgumentException e) {
