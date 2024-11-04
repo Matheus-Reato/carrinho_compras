@@ -514,6 +514,9 @@ public class Main {
 
                                     ItensCarrinho itensCarrinho = itensCarrinhoDao.encontrarPorId(id);
 
+                                    if(!listaItens.contains(itensCarrinho)){
+                                            throw new IllegalStateException("O carrinho não possui esse produto.");
+                                    }
 
                                     Estoque produtoAntigo = itensCarrinho.getProduto();
                                     int quantidadeAntiga = itensCarrinho.getQuantidade();
@@ -542,13 +545,13 @@ public class Main {
                                         Estoque estoque = estoqueDao.encontrarPorId(idProduto);
                                         estoque.verficarDisponibilidade(estoque);
                                         itensCarrinho.setProduto(estoque);
-                                        produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga); // tirar daqui e deixar no código solto, já que aparece tanto no s quanto no n
                                     }
 
                                     if (escolha == 'n') {
                                         verdadeiro = false;
-                                        produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga);
                                     }
+
+                                    produtoAntigo.setQuantidade(produtoAntigo.getQuantidade() + quantidadeAntiga);
 
                                     do {
                                         System.out.print("Quantidade atual do produto no carrinho = " + itensCarrinho.getQuantidade() + ". Deseja alterá-lo?(s/n) ");
