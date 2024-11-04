@@ -1,5 +1,7 @@
 package uol.compass.carrinho.modelo.entidades;
 
+import java.util.Objects;
+
 public class ItensCarrinho{
 
     private Integer id;
@@ -57,6 +59,19 @@ public class ItensCarrinho{
         if (quantidade == null || quantidade <= 0) {
             throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItensCarrinho that = (ItensCarrinho) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
