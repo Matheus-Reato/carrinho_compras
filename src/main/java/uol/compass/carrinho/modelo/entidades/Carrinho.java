@@ -2,6 +2,7 @@ package uol.compass.carrinho.modelo.entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Carrinho {
 
@@ -59,6 +60,18 @@ public class Carrinho {
         this.valor_total = listaItens.stream().mapToDouble(ItensCarrinho::valorProduto).sum();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carrinho carrinho = (Carrinho) o;
+        return Objects.equals(id, carrinho.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {

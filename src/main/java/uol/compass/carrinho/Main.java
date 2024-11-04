@@ -548,6 +548,8 @@ public class Main {
                                             }
                                         }
 
+                                        System.out.println();
+
                                         System.out.print("Novo id do produto: ");
 
                                         try {
@@ -651,8 +653,10 @@ public class Main {
                                             throw new InputMismatchException("O valor deve ser um número inteiro.");
                                         }
 
+
                                         carrinho = carrinhoDao.encontrarPorId(idCarrinho);
                                         listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
+
 
                                         if (listaItens.isEmpty()) {
                                             throw new IllegalStateException("O carrinho não possui itens");
@@ -672,6 +676,12 @@ public class Main {
                                     } catch (InputMismatchException e) {
                                         sc.nextLine();
                                         throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                    }
+
+                                    ItensCarrinho ic = itensCarrinhoDao.encontrarPorId(id);
+
+                                    if(!listaItens.contains(ic)){
+                                        throw new IllegalStateException("O carrinho não possui esse produto.");
                                     }
 
                                     itensCarrinhoDao.deletarPorId(id);
