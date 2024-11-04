@@ -7,14 +7,14 @@ Este é um projeto em Java 17 de um carrinho de compras que opera pelo terminal.
 * Gerenciar produtos em cada carrinho
 
 ## Tecnologias Utilizadas
-* Java 17
+* Java 17 
 * JDBC
 * MySQL
 
 ## Configuração
 
 ### Clonar repositório
-Pelo terminal entre na pasta onde deseja que o projeto seja clonado e digite o comando a seguir
+Pelo terminal entre na pasta onde deseja que o projeto seja clonado e digite o comando a seguir.
 ```
 git clone https://github.com/Matheus-Reato/carrinho_compras.git
 ```
@@ -63,13 +63,15 @@ CREATE TABLE itens_carrinho (
 
 ### Alterar informações de Usuário e Senha do arquivo db.propriedades
 
-No arquivo db.propriedades que se encontra na raiz do projeto, insira o nome de usuário e a senha que você usa para acessar o MySQL no MySQL Workbench
+No arquivo db.propriedades que se encontra na raiz do projeto, insira o nome de usuário e a senha que você usa para acessar o MySQL no MySQL Workbench.
 
-O arquivo db.propriedades já vem configurado com um usuário e senha padrão (root). Se você usa credenciais diferentes, basta substituir root pelo seu usuário na variável user e root pela sua senha na variável password
+O arquivo db.propriedades já vem configurado com um usuário e senha padrão (root). Se você usa credenciais diferentes, basta substituir root pelo seu usuário na variável user e root pela sua senha na variável password.
 
 ### Verifique se o MySQL connector está nas bibliotecas externas do projeto
-Abra o IntelliJ IDEA
 
+>Aviso: A configuração do projeto proposta nesse ReadME foi pensada para ser usada com a IDE IntelliJ. Se você estiver usando uma IDE diferente, será necessário consultar a documentação correspondente para aplicar as configurações adequadas.
+
+Abra o IntelliJ IDEA.
 
 Caso o MySQL connector não esteja presente, adicione ele ao projeto.
 
@@ -84,12 +86,24 @@ Se você não possui um conector MySQL instalado em sua máquina, visite https:/
 * De "Ok" e "Apply"
 * Feche a janela
 
-No momento em que fiz o projeto, utilizei o mysql-connector-j-9.1.0. Caso esteja usando versões anteriores ou posteriores e haja algum problema, considere tentar usar a mesma versão que usei.
+Se a sua IDE estiver configurada em um idioma diferente, busque as opções correspondentes aos termos mencionados.
+
+## Versões
+* IntelliJ IDEA 2023.1.3
+* Java 17.0.7 Zulu
+* MySQL 8.0.32
+* MySQL Connector J 9.1.0
+
+Caso esteja usando versões anteriores ou posteriores e haja algum problema, considere tentar usar a mesma versão que usei.
+
 
 ## Como usar
 
+* Certifique-se que fez as configurações necessárias
 * Abra o IntelliJ IDEA
 * Navegue até o arquivo main do projeto
 * Execute o projeto
+
+
 
 
