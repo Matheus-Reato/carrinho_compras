@@ -121,6 +121,7 @@ public class Main {
                                     for (Estoque e : listaEstoque) {
                                         System.out.println(e);
                                     }
+                                    System.out.println();
 
                                     System.out.print("Qual o id do produto que deseja alterar? ");
                                     try {
@@ -242,6 +243,8 @@ public class Main {
                                     for (Estoque e : listaEstoque) {
                                         System.out.println(e);
                                     }
+
+                                    System.out.println();
 
                                     if (escolhaRemover == 1) {
                                         System.out.print("Qual o id do produto que deseja remover? ");
@@ -395,7 +398,9 @@ public class Main {
                                             System.out.println(listaCarrinho);
                                         }
 
-                                        System.out.print("Qual o id do carrinho que deseja atualizar os itens? ");
+                                        System.out.println();
+
+                                        System.out.print("Qual o id do carrinho que deseja inserir os itens? ");
 
                                         try {
                                             idCarrinho = sc.nextInt();
@@ -472,7 +477,6 @@ public class Main {
                                         escolha = sc.next().toLowerCase().charAt(0);
                                     } while (escolha != 's' && escolha != 'n');
 
-
                                     if (escolha == 's') {
                                         carrinho = carrinhoDao.encontrarPorId(carrinho.getId()); //verificando se o ID ainda existe
                                         listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
@@ -486,6 +490,8 @@ public class Main {
                                         for (Carrinho listaCarrinho : carrinhos) {
                                             System.out.println(listaCarrinho);
                                         }
+
+                                        System.out.println();
 
                                         System.out.println("Qual o id do carrinho que deseja atualizar os itens? ");
 
@@ -503,9 +509,12 @@ public class Main {
                                             throw new IllegalStateException("O carrinho não possui itens");
                                         }
                                     }
+
                                     for (ItensCarrinho item : listaItens) {
                                         System.out.println(item);
                                     }
+
+                                    System.out.println();
 
                                     System.out.print("ID do item que deseja atualizar: ");
 
@@ -539,7 +548,6 @@ public class Main {
                                             }
                                         }
 
-                                        System.out.println();
                                         System.out.print("Novo id do produto: ");
 
                                         try {
@@ -655,6 +663,8 @@ public class Main {
                                         System.out.println(item);
                                     }
 
+                                    System.out.println();
+
                                     System.out.print("ID do item que deseja remover: ");
 
                                     try {
@@ -682,6 +692,8 @@ public class Main {
                                     int id;
                                     CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
 
+                                    System.out.println();
+
                                     System.out.print("Qual o id do carrinho que deseja remover? ");
 
                                     try {
@@ -706,6 +718,8 @@ public class Main {
                                     int id;
                                     int idItem;
                                     CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
+
+                                    System.out.println();
 
                                     System.out.print("Qual o id do carrinho que você quer procurar o item? ");
 
@@ -743,6 +757,8 @@ public class Main {
                                 try {
                                     int id;
                                     CarrinhoUtil.exibirListaCarrinhos(carrinhoDao);
+
+                                    System.out.println();
 
                                     System.out.print("Qual o id do carrinho que você quer procurar os itens? ");
 

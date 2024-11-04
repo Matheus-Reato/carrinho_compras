@@ -76,11 +76,11 @@ public class ItensCarrinho{
 
     @Override
     public String toString() {
-        return "ItensCarrinho{" +
-                "id=" + id +
-                ", produto=" + produto +
-                ", quantidade=" + quantidade +
-                ", carrinho_id=" + carrinho_id +
+        return "Itens{" +
+                "ID= " + id +
+                ", Produto em " + produto +
+                ", Quantidade no carrinho= " + quantidade +
+                ", ID Carrinho= " + carrinho_id +
                 '}';
     }
 }
