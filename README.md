@@ -104,6 +104,19 @@ Caso esteja usando versões anteriores ou posteriores e haja algum problema, con
 * Navegue até o arquivo main do projeto
 * Execute o projeto
 
+## Experiência Pessoal
+
+Este projeto foi desenvolvido como parte do primeiro desafio do Programa de Bolsas (PB) de Spring Boot e AWS da Compass UOL. Tivemos um prazo de uma semana para entregar uma aplicação de carrinho de compras, que incluía alguns requisitos básicos, mas oferecia bastante flexibilidade para implementarmos melhorias e personalizações que considerássemos relevantes.
+
+Uma das dificuldades que enfrentei ao longo deste projeto foi estruturar a base de dados, ao definir as tabelas necessárias e os campos de cada uma. Além de decidir como organizar adequadamente as informações em cada tabela.
+
+Outra dificuldade que encontrei, possivelmente devido à falta de experiência, foi avaliar o progresso do projeto ao longo dos primeiros três dias. Eu sabia que estava no caminho, mas não conseguia estimar com precisão se estava adiantado, atrasado ou na média.
+
+Do quarto para o quinto dia começei a me sentir mais confiante em relação ao meu progresso e já conseguia visualizar melhor o resultado final que eu queria alcançar.
+
+Acredito que este projeto foi fundamental para solidificar os conteúdos que aprendi sobre Java. A prática aplicada no desenvolvimento me permitiu reforçar conceitos e ganhar confiança na linguagem e em mim mesmo.
+
+
 
 
 
