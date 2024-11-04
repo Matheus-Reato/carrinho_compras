@@ -1,5 +1,6 @@
 package uol.compass.carrinho;
 
+import uol.compass.carrinho.DB.DbExcessao;
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.enums.Status;
 import uol.compass.carrinho.modelo.dao.CarrinhoDao;
@@ -384,6 +385,9 @@ public class Main {
                                         escolha = sc.next().toLowerCase().charAt(0);
                                     } while (escolha != 's' && escolha != 'n');
 
+                                    if(escolha == 's'){
+                                        carrinho = carrinhoDao.encontrarPorId(carrinho.getId()); //verificando se o ID ainda existe
+                                    }
 
                                     if (escolha == 'n') {
                                         List<Carrinho> carrinhos = carrinhoDao.encontrarTodos();
@@ -471,6 +475,7 @@ public class Main {
 
 
                                     if (escolha == 's') {
+                                        carrinho = carrinhoDao.encontrarPorId(carrinho.getId()); //verificando se o ID ainda existe
                                         listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
                                         if (listaItens.isEmpty()) {
@@ -613,6 +618,7 @@ public class Main {
                                     } while (escolha != 's' && escolha != 'n');
 
                                     if (escolha == 's') {
+                                        carrinho = carrinhoDao.encontrarPorId(carrinho.getId()); //verificando se o ID ainda existe
                                         listaItens = itensCarrinhoDao.encontrarPorCarrinho(carrinho);
 
                                         if (listaItens.isEmpty()) {
