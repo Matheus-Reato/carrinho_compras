@@ -429,7 +429,6 @@ public class Main {
                                         throw new InputMismatchException("O valor deve ser um número inteiro.");
                                     }
 
-
                                     itensCarrinho.validarQuantidade(quantidade);
 
                                     Estoque estoque = estoqueDao.encontrarPorId(idProduto);
@@ -533,8 +532,11 @@ public class Main {
 
                                     if (escolha == 's') {
                                         List<Estoque> listaEstoque = estoqueDao.encontrarTodos();
+
                                         for (Estoque estoque : listaEstoque) {
-                                            System.out.println(estoque);
+                                            if(!estoque.equals(itensCarrinho.getProduto())){
+                                                System.out.println(estoque);
+                                            }
                                         }
 
                                         System.out.println();
@@ -545,6 +547,10 @@ public class Main {
                                         } catch (InputMismatchException e) {
                                             sc.nextLine();
                                             throw new InputMismatchException("O valor deve ser um número inteiro.");
+                                        }
+
+                                        if(idProduto == itensCarrinho.getProduto().getId()){
+                                            throw new IllegalArgumentException("O ID não pode ser o mesmo do produto que você deseja atualizar.");
                                         }
 
                                         Estoque estoque = estoqueDao.encontrarPorId(idProduto);
