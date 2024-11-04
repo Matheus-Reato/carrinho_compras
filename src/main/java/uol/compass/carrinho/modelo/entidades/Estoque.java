@@ -149,13 +149,13 @@ public class Estoque {
 
     @Override
     public String toString() {
-        return "Estoque{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", categoria=" + categoria +
-                ", valor=" + valor +
-                ", quantidade=" + quantidade +
-                ", status_produto=" + status_produto +
-                '}';
+        return "Estoque[" +
+                "ID= " + id +
+                ", Nome= '" + nome + '\'' +
+                ", Categoria= " + categoria +
+                ", Valor= R$" + valor +
+                ", Quantidade em estoque= " + quantidade +
+                ", Status= " + status_produto +
+                ']';
     }
 }

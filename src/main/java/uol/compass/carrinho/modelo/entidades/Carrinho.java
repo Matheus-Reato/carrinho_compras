@@ -63,8 +63,8 @@ public class Carrinho {
     @Override
     public String toString() {
         return "Carrinho{" +
-                "id=" + id +
-                ", valor_total=" + valor_total +
+                "ID= " + id +
+                ", Valor Total= R$" + valor_total +
                 '}';
     }
 }
