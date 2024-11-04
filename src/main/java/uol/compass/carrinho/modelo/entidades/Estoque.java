@@ -3,6 +3,8 @@ package uol.compass.carrinho.modelo.entidades;
 import uol.compass.carrinho.enums.Categoria;
 import uol.compass.carrinho.enums.Status;
 
+import java.util.Objects;
+
 public class Estoque {
 
     private Integer id;
@@ -130,6 +132,19 @@ public class Estoque {
         if (estoque.getStatus_produto() == Status.INDISPONIVEL ){
             throw new IllegalArgumentException("Não é possível adicionar um item indisponível ao carrinho.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Estoque estoque = (Estoque) o;
+        return Objects.equals(id, estoque.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
